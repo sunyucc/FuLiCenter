@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class SlpashActivity extends AppCompatActivity {
 private final long sleepTime  = 5000;
@@ -30,7 +31,7 @@ private final long sleepTime  = 5000;
                     }
                 }
                 startActivity(new Intent(SlpashActivity.this,MainActivity.class));
-                finish();
+                MFGT.finish(SlpashActivity.this);
             }
         }).start();
     }
