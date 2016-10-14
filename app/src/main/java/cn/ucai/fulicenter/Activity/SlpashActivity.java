@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.Activity;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -18,21 +19,12 @@ private final long sleepTime  = 5000;
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new Runnable() {
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                long startTime = System.currentTimeMillis();
-                long costTime = System.currentTimeMillis()-startTime;
-                if(sleepTime-costTime>0){
-                    try {
-                        Thread.sleep(sleepTime-costTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                startActivity(new Intent(SlpashActivity.this,MainActivity.class));
-                MFGT.finish(SlpashActivity.this);
+                MFGT.gotoMainActivity(SlpashActivity.this);
+                finish();
             }
-        }).start();
+        },sleepTime);
     }
 }
