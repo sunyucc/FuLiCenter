@@ -30,6 +30,7 @@ private final long sleepTime  = 5000;
                     }
                 }
                 startActivity(new Intent(SlpashActivity.this,MainActivity.class));
+                finish();
             }
         }).start();
     }
