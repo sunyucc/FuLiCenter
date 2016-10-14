@@ -6,13 +6,6 @@ package cn.ucai.fulicenter.bean;
 
 public class AlbumsBean {
 
-    /**
-     * pid : 7677
-     * imgId : 28296
-     * imgUrl : 201509/goods_img/7677_P_1442391216432.png
-     * thumbUrl : no_picture.gif
-     */
-
     private int pid;
     private int imgId;
     private String imgUrl;
