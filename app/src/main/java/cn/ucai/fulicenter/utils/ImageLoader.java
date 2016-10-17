@@ -343,7 +343,7 @@ public class ImageLoader {
         }
     }
 
-    public static void downloadImg(Context context,ImageView imageView,String thumb){
+    public static void downloadImg(Context context, ImageView imageView, boolean thumb){
         setImage(I.DOWNLOAD_IMG_URL+thumb,context,imageView,true);
     }
 

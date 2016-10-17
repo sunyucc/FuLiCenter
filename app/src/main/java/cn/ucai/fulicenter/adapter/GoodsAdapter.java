@@ -49,7 +49,9 @@ public class GoodsAdapter extends Adapter {
         } else {
             GoodsViewHolder gvh = (GoodsViewHolder) holder;
             NewGoodsBean goods = mList.get(position);
-            ImageLoader.downloadImg(mContext,);
+            ImageLoader.downloadImg(mContext,R.layout.fragment_newgoods,false);
+            gvh.ivGoodsName.setText(goods.getGoodsName());
+            gvh.tvGoodsPrice.setText(goods.getShopPrice());
         }
     }
 
