@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/list_background">
-    <!-- 底部菜单栏-->
+     <!--底部菜单栏-->
 
     <RadioGroup
         android:id="@+id/menu"
