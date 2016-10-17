@@ -6,17 +6,14 @@ import android.app.Application;
  * Created by sunyu on 2016/10/17.
  */
 public class FuLiCenterApplication extends Application{
-    private static FuLiCenterApplication instance ;
     public  static FuLiCenterApplication application;
-    public FuLiCenterApplication() {
-        instance = this;
-    }
+    private static FuLiCenterApplication instance ;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        instance =this;
         application=this;
+        instance =this;
     }
 
     public static FuLiCenterApplication getInstance() {

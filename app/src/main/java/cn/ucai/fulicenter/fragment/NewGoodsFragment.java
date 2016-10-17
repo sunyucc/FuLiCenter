@@ -37,16 +37,17 @@ public class NewGoodsFragment extends Fragment {
     TextView mTv;
     @BindView(R.id.recyclerView)
     RecyclerView mRv;
-    MainActivity mContext;
+    Context mContext;
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mList;
+    int mPageId=1;
     @Nullable
     @Override
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_newgoods, container, false);
         ButterKnife.bind(this, layout);
-        mContext = new MainActivity();
+        mContext = getContext();
         mList = new ArrayList<>();
         mAdapter = new GoodsAdapter(mContext,mList);
         initView();
@@ -55,7 +56,7 @@ public class NewGoodsFragment extends Fragment {
     }
 
     private void initData() {
-        NetDao.downloadNewGoods(mContext, 1, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadNewGoods(mContext, mPageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 L.e("result="+result);

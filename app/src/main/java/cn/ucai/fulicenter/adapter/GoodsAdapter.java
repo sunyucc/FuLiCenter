@@ -56,7 +56,7 @@ public class GoodsAdapter extends Adapter {
         } else {
             GoodsViewHolder gvh = (GoodsViewHolder) holder;
             NewGoodsBean goods = mList.get(position);
-            ImageLoader.downloadImg(mContext, gvh.ivGoodsThumb,goods.getGoodsThumb(),false);
+            ImageLoader.downloadImg(mContext,gvh.ivGoodsThumb,goods.getGoodsThumb(),true);
             gvh.ivGoodsName.setText(goods.getGoodsName());
             gvh.tvGoodsPrice.setText(goods.getCurrencyPrice());
         }
@@ -71,9 +71,8 @@ public class GoodsAdapter extends Adapter {
     public int getItemViewType(int position) {
         if (position == getItemCount() - 1) {
             return I.TYPE_FOOTER;
-        } else {
-            return I.TYPE_ITEM;
         }
+            return I.TYPE_ITEM;
     }
 
     static class FooterViewHolder extends ViewHolder{
