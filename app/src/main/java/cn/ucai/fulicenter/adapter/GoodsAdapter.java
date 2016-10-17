@@ -42,6 +42,13 @@ public class GoodsAdapter extends Adapter {
         return holder;
     }
 
+    public void initData(ArrayList<NewGoodsBean> list) {
+        if (mList != null) {
+            mList.clear();
+        }
+        mList.addAll(list);
+        notifyDataSetChanged();
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (getItemViewType(position) == I.TYPE_FOOTER) {
@@ -49,9 +56,9 @@ public class GoodsAdapter extends Adapter {
         } else {
             GoodsViewHolder gvh = (GoodsViewHolder) holder;
             NewGoodsBean goods = mList.get(position);
-            ImageLoader.downloadImg(mContext,R.layout.fragment_newgoods,false);
+            ImageLoader.downloadImg(mContext, gvh.ivGoodsThumb,goods.getGoodsThumb(),false);
             gvh.ivGoodsName.setText(goods.getGoodsName());
-            gvh.tvGoodsPrice.setText(goods.getShopPrice());
+            gvh.tvGoodsPrice.setText(goods.getCurrencyPrice());
         }
     }
 
