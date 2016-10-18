@@ -115,6 +115,7 @@ public class GoodsAdapter extends Adapter {
         }
     }
 
+
     static class GoodsViewHolder extends ViewHolder {
         @BindView(R.id.ivGoodsThumb)
         ImageView ivGoodsThumb;
@@ -127,5 +128,8 @@ public class GoodsAdapter extends Adapter {
             super(view);
             ButterKnife.bind(this, view);
         }
+    }
+    private int getFooterString(){
+        return isMore ? R.string.load_more : R.string.no_more;
     }
 }
