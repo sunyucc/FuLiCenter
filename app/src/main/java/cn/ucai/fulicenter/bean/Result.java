@@ -1,12 +1,14 @@
 package cn.ucai.fulicenter.bean;
 
-public class Result {
+import java.io.Serializable;
+
+public class Result implements Serializable {
 	private int retCode = -1;
 	private boolean retMsg;
 	private Object retData;
 	public Result() {
 	}
-	public Result(boolean retMsg, int retCode){
+	public Result(boolean retMsg,int retCode){
 		this.retMsg = retMsg;
 		this.retCode = retCode;
 	}

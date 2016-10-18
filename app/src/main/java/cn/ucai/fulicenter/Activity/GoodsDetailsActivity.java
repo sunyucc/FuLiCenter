@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.dao.NetDao;
@@ -97,7 +98,28 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         tvGoodName.setText(details.getGoodsName());
         tvgoodPriceShop.setText(details.getShopPrice());
         tvGoodPriceCurrent.setText(details.getCurrencyPrice());
-//        salv.startPlayLoop(indicator,);
+        salv.startPlayLoop(indicator,getAlbumImgUrl(details),getAlbumImgCount(details));
+
+    }
+
+    private int getAlbumImgCount(GoodsDetailsBean details) {
+        if (details.getProperties()!=null&&details.getProperties().length>0) {
+             return details.getProperties()[0].getAlbums().length;
+        }
+            return 0;
+    }
+
+    private String[] getAlbumImgUrl(GoodsDetailsBean details) {
+        String[] urls = new String[]{};
+        if (details.getProperties()!=null&&details.getProperties().length>0) {
+            AlbumsBean[] albums = details.getProperties()[0].getAlbums();
+            urls = new String[albums.length];
+            for(int i = 0 ; i <albums.length;i++) {
+                urls[i] = albums[i].getImgUrl();
+            }
+
+        }
+        return urls;
     }
 
     private void initVeiw() {

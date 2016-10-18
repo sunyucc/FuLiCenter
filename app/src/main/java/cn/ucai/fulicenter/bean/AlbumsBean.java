@@ -1,18 +1,13 @@
 package cn.ucai.fulicenter.bean;
 
-/**
- * Created by Administrator on 2016/10/13 0013.
- */
+import java.io.Serializable;
 
-public class AlbumsBean {
+public class AlbumsBean implements Serializable {
 
     private int pid;
     private int imgId;
     private String imgUrl;
     private String thumbUrl;
-
-    public AlbumsBean() {
-    }
 
     public int getPid() {
         return pid;
@@ -56,4 +51,3 @@ public class AlbumsBean {
                 '}';
     }
 }
-
