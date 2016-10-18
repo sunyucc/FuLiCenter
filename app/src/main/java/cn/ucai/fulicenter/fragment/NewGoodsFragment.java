@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.GoodsAdapter;
@@ -41,6 +40,7 @@ public class NewGoodsFragment extends Fragment {
     GoodsAdapter mAdapter;
     ArrayList<NewGoodsBean> mList;
     int mPageId=1;
+    GridLayoutManager glm ;
     @Nullable
     @Override
 
@@ -50,6 +50,7 @@ public class NewGoodsFragment extends Fragment {
         mContext = getContext();
         mList = new ArrayList<>();
         mAdapter = new GoodsAdapter(mContext,mList);
+        glm= new GridLayoutManager(mContext, I.COLUM_NUM);
         initView();
         initData();
         return layout;
@@ -78,7 +79,6 @@ public class NewGoodsFragment extends Fragment {
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
                 getResources().getColor(R.color.google_yellow));
-        GridLayoutManager glm = new GridLayoutManager(mContext, I.COLUM_NUM);
         mRv.setLayoutManager(glm);
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mAdapter);

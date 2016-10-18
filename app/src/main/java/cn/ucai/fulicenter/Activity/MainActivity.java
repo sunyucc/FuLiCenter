@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         initFragment();
     }
 
+
     private void initFragment() {
         mFragments = new Fragment[5];
         mNewGoodsFragment = new NewGoodsFragment();

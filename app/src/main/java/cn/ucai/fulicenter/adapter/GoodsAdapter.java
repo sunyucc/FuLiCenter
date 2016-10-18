@@ -24,7 +24,37 @@ import cn.ucai.fulicenter.utils.ImageLoader;
 public class GoodsAdapter extends Adapter {
     Context mContext;
     ArrayList<NewGoodsBean> mList;
+    String footerText;
+    public void initContactList(ArrayList<NewGoodsBean> list) {
+        this.mList.clear();
+        this.mList.addAll(list);
+        notifyDataSetChanged();
+    }
 
+    /**
+     * 添加新的一页数据
+     * @param list
+     */
+    public void addContactList(ArrayList<NewGoodsBean> list) {
+        this.mList.addAll(list);
+        notifyDataSetChanged();
+    }
+
+    public void setFooter(String footerText) {
+        this.footerText=footerText;
+        notifyDataSetChanged();
+    }
+
+    public boolean isMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+        notifyDataSetChanged();
+    }
+
+    boolean isMore;
     public GoodsAdapter(Context mContext, ArrayList mList) {
         this.mContext = mContext;
         this.mList = mList;
