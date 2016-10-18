@@ -25,7 +25,7 @@ public class GoodsAdapter extends Adapter {
     Context mContext;
     ArrayList<NewGoodsBean> mList;
     String footerText;
-    public void initContactList(ArrayList<NewGoodsBean> list) {
+    public void initList(ArrayList<NewGoodsBean> list) {
         this.mList.clear();
         this.mList.addAll(list);
         notifyDataSetChanged();
@@ -35,7 +35,7 @@ public class GoodsAdapter extends Adapter {
      * 添加新的一页数据
      * @param list
      */
-    public void addContactList(ArrayList<NewGoodsBean> list) {
+    public void addList(ArrayList<NewGoodsBean> list) {
         this.mList.addAll(list);
         notifyDataSetChanged();
     }
