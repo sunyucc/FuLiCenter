@@ -1,17 +1,21 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.ucai.fulicenter.Activity.GoodsDetailsActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
@@ -31,11 +35,13 @@ public class GoodsAdapter extends Adapter {
         notifyDataSetChanged();
     }
 
+
     /**
      * 添加新的一页数据
      * @param list
      */
     public void addList(ArrayList<NewGoodsBean> list) {
+
         this.mList.addAll(list);
         notifyDataSetChanged();
     }
@@ -90,6 +96,7 @@ public class GoodsAdapter extends Adapter {
             ImageLoader.downloadImg(mContext,gvh.ivGoodsThumb,goods.getGoodsThumb(),true);
             gvh.ivGoodsName.setText(goods.getGoodsName());
             gvh.tvGoodsPrice.setText(goods.getCurrencyPrice());
+            gvh.mLayout_goods.setTag(goods.getGoodsId());
         }
     }
 
@@ -117,17 +124,24 @@ public class GoodsAdapter extends Adapter {
     }
 
 
-    static class GoodsViewHolder extends ViewHolder {
+     class GoodsViewHolder extends ViewHolder {
         @BindView(R.id.ivGoodsThumb)
         ImageView ivGoodsThumb;
         @BindView(R.id.ivGoodsName)
         TextView ivGoodsName;
         @BindView(R.id.tvGoodsPrice)
         TextView tvGoodsPrice;
-
+        @BindView(R.id.layout_goods)
+        LinearLayout mLayout_goods;
         GoodsViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        @OnClick(R.id.layout_goods)
+        public void onGoodsItemClick(){
+            int goodsId = (int) mLayout_goods.getTag();
+            mContext.startActivity(new Intent(mContext, GoodsDetailsActivity.class).putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
         }
     }
     private int getFooterString(){

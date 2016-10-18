@@ -24,6 +24,7 @@ import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
+import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 /**
  * Created by sunyu on 2016/10/17.
@@ -50,7 +51,6 @@ public class NewGoodsFragment extends Fragment {
         mContext = getContext();
         mList = new ArrayList<>();
         mAdapter = new GoodsAdapter(mContext,mList);
-
         initView();
         initData();
         setListener();
@@ -118,6 +118,7 @@ public class NewGoodsFragment extends Fragment {
                         lastPosition == mAdapter.getItemCount() - 1 &&
                         mAdapter.isMore()) {
                     mPageId++;
+                    L.e(String.valueOf(mAdapter.isMore()));
                     downloadNewGoods(I.ACTION_PULL_UP);
                 }
             }
@@ -134,14 +135,14 @@ public class NewGoodsFragment extends Fragment {
     }
 
     private void initView() {
-        glm= new GridLayoutManager(mContext, I.COLUM_NUM);
         srl.setColorSchemeColors(getResources().getColor(R.color.google_red),
                 getResources().getColor(R.color.google_blue),
                 getResources().getColor(R.color.google_green),
                 getResources().getColor(R.color.google_yellow));
+        glm= new GridLayoutManager(mContext, I.COLUM_NUM);
         mRv.setLayoutManager(glm);
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mAdapter);
+        mRv.addItemDecoration(new SpaceItemDecoration(12));
     }
-
 }
