@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/good_detail_bg_white">
     <RelativeLayout
         android:id="@+id/layouttitle"
@@ -72,7 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="25dp"
-        android:layout_marginTop="100dp"
         android:layout_below="@+id/layouttitle"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
@@ -108,7 +108,23 @@
             android:layout_alignParentRight="true"
             android:textColor="@color/good_detail_currency_price"
             android:text="tv_good_price_current"/>
-
+        <cn.ucai.fulicenter.views.SlideAutoLoopView
+            android:id="@+id/salv"
+            android:layout_below="@+id/tvgoodpricecurrent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/btn_white_pressed"/>
+        <cn.ucai.fulicenter.views.FlowIndicator
+            android:id="@+id/indicator"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:count="4"
+            app:focus="1"
+            app:normal_color="#a1d1d1d1"
+            app:r="5dp"
+            app:space="3dp"
+            app:focus_color="#F00"/>
     </RelativeLayout>
 
 </RelativeLayout>
