@@ -82,7 +82,8 @@ public class GoodsAdapter extends Adapter {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (getItemViewType(position) == I.TYPE_FOOTER) {
-
+            FooterViewHolder footerViewHolder = (FooterViewHolder) holder;
+            footerViewHolder.tvFooter.setText(getFooterString());
         } else {
             GoodsViewHolder gvh = (GoodsViewHolder) holder;
             NewGoodsBean goods = mList.get(position);
