@@ -2,58 +2,49 @@ package cn.ucai.fulicenter.Activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.webkit.WebView;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
-import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.dao.NetDao;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
 public class GoodsDetailsActivity extends AppCompatActivity {
 
-    @BindView(R.id.tvgoodenglish)
-    TextView tvgoodenglish;
-    @BindView(R.id.tvGoodName)
+    Context mContext;
+    @BindView(R.id.backClickArea)
+    LinearLayout backClickArea;
+    @BindView(R.id.tv_good_name_english)
+    TextView tvGoodNameEnglish;
+    @BindView(R.id.tv_good_name)
     TextView tvGoodName;
-    @BindView(R.id.tvgoodPriceShop)
-    TextView tvgoodPriceShop;
-    @BindView(R.id.tvGoodPriceCurrent)
+    @BindView(R.id.tv_good_price_shop)
+    TextView tvGoodPriceShop;
+    @BindView(R.id.tv_good_price_current)
     TextView tvGoodPriceCurrent;
-    @BindView(R.id.goodbref)
-    WebView goodbref;
-    int goodsId;
-    @BindView(R.id.imageView)
-    ImageView imageView;
-    @BindView(R.id.textViewTitle)
-    TextView textViewTitle;
-    @BindView(R.id.ivgoodshare)
-    ImageView ivgoodshare;
-    @BindView(R.id.ivcollect)
-    ImageView ivcollect;
-    @BindView(R.id.ivgoodcart)
-    ImageView ivgoodcart;
-    @BindView(R.id.tvcartcount)
-    TextView tvcartcount;
-    @BindView(R.id.layouttitle)
-    RelativeLayout layouttitle;
-    @BindView(R.id.salv)
-    SlideAutoLoopView salv;
     @BindView(R.id.indicator)
     FlowIndicator indicator;
-    Context mContext;
+    @BindView(R.id.layout_image)
+    RelativeLayout layoutImage;
+    @BindView(R.id.wv_good_brief)
+    WebView wvGoodBrief;
+    int goodsId;
+    @BindView(R.id.salv)
+    SlideAutoLoopView salv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +56,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         if (goodsId == 0) {
             finish();
         }
-        mContext=this;
+        mContext = this;
         initVeiw();
         initData();
         setListener();
@@ -79,7 +70,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         NetDao.downloadGoodsDetail(mContext, goodsId, new OkHttpUtils.OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
-                L.i("details="+result);
+                L.i("details=" + result);
                 if (result != null) {
                     showGoogDetails(result);
                 } else {
@@ -93,28 +84,29 @@ public class GoodsDetailsActivity extends AppCompatActivity {
             }
         });
     }
-    private void showGoogDetails(GoodsDetailsBean details) {
-        tvgoodenglish.setText(details.getGoodsEnglishName());
-        tvGoodName.setText(details.getGoodsName());
-        tvgoodPriceShop.setText(details.getShopPrice());
-        tvGoodPriceCurrent.setText(details.getCurrencyPrice());
-        salv.startPlayLoop(indicator,getAlbumImgUrl(details),getAlbumImgCount(details));
 
+    private void showGoogDetails(GoodsDetailsBean details) {
+        tvGoodNameEnglish.setText(details.getGoodsEnglishName());
+        tvGoodName.setText(details.getGoodsName());
+        tvGoodPriceShop.setText(details.getShopPrice());
+        tvGoodPriceCurrent.setText(details.getCurrencyPrice());
+        salv.startPlayLoop(indicator, getAlbumImgUrl(details), getAlbumImgCount(details));
+        wvGoodBrief.loadDataWithBaseURL(null,details.getGoodsBrief(),I.TEXT_HTML,I.UTF_8,null);
     }
 
     private int getAlbumImgCount(GoodsDetailsBean details) {
-        if (details.getProperties()!=null&&details.getProperties().length>0) {
-             return details.getProperties()[0].getAlbums().length;
+        if (details.getProperties() != null && details.getProperties().length > 0) {
+            return details.getProperties()[0].getAlbums().length;
         }
-            return 0;
+        return 0;
     }
 
     private String[] getAlbumImgUrl(GoodsDetailsBean details) {
         String[] urls = new String[]{};
-        if (details.getProperties()!=null&&details.getProperties().length>0) {
+        if (details.getProperties() != null && details.getProperties().length > 0) {
             AlbumsBean[] albums = details.getProperties()[0].getAlbums();
             urls = new String[albums.length];
-            for(int i = 0 ; i <albums.length;i++) {
+            for (int i = 0; i < albums.length; i++) {
                 urls[i] = albums[i].getImgUrl();
             }
 
@@ -124,4 +116,15 @@ public class GoodsDetailsActivity extends AppCompatActivity {
 
     private void initVeiw() {
     }
+
+    @OnClick(R.id.backClickArea)
+    public void onBackClick(View v) {
+        MFGT.finish(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+        MFGT.finish(this);
+    }
 }
+
