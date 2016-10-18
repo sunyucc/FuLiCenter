@@ -73,9 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="25dp"
-        android:layout_below="@+id/layouttitle"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+        android:layout_below="@+id/layouttitle">
         <TextView
             android:id="@+id/tvgoodenglish"
             android:layout_width="wrap_content"
@@ -84,7 +82,7 @@
             android:layout_margin="5dp"
             android:textColor="@color/black"/>
         <TextView
-            android:id="@+id/tvgoodname"
+            android:id="@+id/tvGoodName"
             android:layout_below="@+id/tvgoodenglish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -92,7 +90,7 @@
             android:layout_margin="5dp"
             android:textColor="@color/black"/>
         <TextView
-            android:id="@+id/tvgoodpriceshop"
+            android:id="@+id/tvgoodPriceShop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -100,17 +98,17 @@
             android:textColor="@color/good_detail_currency_price"
             android:text="tv_good_price_shop"/>
         <TextView
-            android:id="@+id/tvgoodpricecurrent"
+            android:id="@+id/tvGoodPriceCurrent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:layout_below="@+id/tvgoodpriceshop"
+            android:layout_below="@+id/tvgoodPriceShop"
             android:layout_alignParentRight="true"
             android:textColor="@color/good_detail_currency_price"
             android:text="tv_good_price_current"/>
         <cn.ucai.fulicenter.views.SlideAutoLoopView
             android:id="@+id/salv"
-            android:layout_below="@+id/tvgoodpricecurrent"
+            android:layout_below="@+id/tvGoodPriceCurrent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/btn_white_pressed"/>
