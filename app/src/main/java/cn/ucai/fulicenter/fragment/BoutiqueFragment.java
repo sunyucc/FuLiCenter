@@ -47,9 +47,6 @@ public class BoutiqueFragment extends BlankFragment {
         mList = new ArrayList<>();
         mAdapter = new BoutiqueAdapter(mContext,mList);
         super.onCreateView(inflater, container, savedInstanceState);
-//        initView();
-//        initData();
-//        setListener();
         return layout;
     }
     private void downloadNewGoods(final int action) {

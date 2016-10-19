@@ -41,14 +41,14 @@ public class BoutiqueChildActivity extends BaseActivity {
     ArrayList<NewGoodsBean> mList;
     int pageId = 1;
     GridLayoutManager glm;
-    int  catId;
+    BoutiqueBean bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_boutique_child);
         ButterKnife.bind(this);
-        catId = (int ) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
-        if(catId == 0){
+        bean = (BoutiqueBean) getIntent().getSerializableExtra(I.Boutique.CAT_ID);
+        if(bean == null){
             finish();
         }
         mContext = this;
@@ -70,7 +70,7 @@ public class BoutiqueChildActivity extends BaseActivity {
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mAdapter);
         mRv.addItemDecoration(new SpaceItemDecoration(12));
-//        mTvCommonTitle.setText(catId.getTitle());
+        mTvCommonTitle.setText(bean.getTitle() );
     }
 
 
@@ -92,7 +92,7 @@ public class BoutiqueChildActivity extends BaseActivity {
         });
     }
     private void downloadNewGoods(final int action) {
-        NetDao.downloadNewGoods(mContext,catId, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadNewGoods(mContext,bean.getId(), pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mSrl.setRefreshing(false);
@@ -156,6 +156,6 @@ public class BoutiqueChildActivity extends BaseActivity {
     @OnClick(R.id.backClickArea)
     public void onClick() {
         MFGT.finish(this);
-        
+
     }
 }
