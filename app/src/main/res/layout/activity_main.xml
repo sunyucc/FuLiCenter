@@ -29,7 +29,7 @@
         <RadioButton
             android:id="@+id/rbCategory"
             android:text="分类"
-            android:drawableTop="@drawable/selector_menu_item_cart"
+            android:drawableTop="@drawable/selector_menu_item_category"
             style="@style/menu_item_style"
             android:button="@null"
             android:checked="false"
