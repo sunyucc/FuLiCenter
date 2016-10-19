@@ -37,12 +37,11 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         L.i("MainActivity.onCreate");
-        initView();
-        initFragment();
+        super.onCreate(savedInstanceState);
+
     }
 
 
@@ -64,6 +63,16 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView() {
         mRb = new RadioButton[]{rbGoodNews, rbBoutique, rbCategory, rbCart, rbContact};
+    }
+
+    @Override
+    protected void initData() {
+        initFragment();
+    }
+
+    @Override
+    protected void setListener() {
+
     }
 
     public void onCheckedChange(View view) {
@@ -110,5 +119,10 @@ public class MainActivity extends BaseActivity {
                 mRb[i].setChecked(false);
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

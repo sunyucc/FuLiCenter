@@ -48,7 +48,6 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_details);
         ButterKnife.bind(this);
         goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
@@ -57,16 +56,17 @@ public class GoodsDetailsActivity extends BaseActivity {
             finish();
         }
         mContext = this;
-        initView();
-        initData();
-        setListener();
+        super.onCreate(savedInstanceState);
+
 
     }
 
-    private void setListener() {
+    @Override
+    protected void setListener() {
     }
 
-    private void initData() {
+    @Override
+    protected  void initData() {
         NetDao.downloadGoodsDetail(mContext, goodsId, new OkHttpUtils.OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
