@@ -9,7 +9,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.utils.MFGT;
 
 public class SlpashActivity extends AppCompatActivity {
-private final long sleepTime  = 5000;
+private final long sleepTime  = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

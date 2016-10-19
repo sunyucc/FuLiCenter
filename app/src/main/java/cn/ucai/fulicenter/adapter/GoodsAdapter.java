@@ -29,18 +29,13 @@ public class GoodsAdapter extends Adapter {
     Context mContext;
     ArrayList<NewGoodsBean> mList;
     String footerText;
-    public void initList(ArrayList<NewGoodsBean> list) {
-        this.mList.clear();
-        this.mList.addAll(list);
-        notifyDataSetChanged();
-    }
 
 
     /**
      * 添加新的一页数据
      * @param list
      */
-    public void addList(ArrayList<NewGoodsBean> list) {
+    public void addData(ArrayList<NewGoodsBean> list) {
 
         this.mList.addAll(list);
         notifyDataSetChanged();

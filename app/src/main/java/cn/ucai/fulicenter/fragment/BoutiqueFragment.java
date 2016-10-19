@@ -2,7 +2,6 @@ package cn.ucai.fulicenter.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -28,7 +27,7 @@ import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 public class BoutiqueFragment extends BlankFragment {
-    @BindView(R.id.textView)
+    @BindView(R.id.tv_refresh)
     TextView textView;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
