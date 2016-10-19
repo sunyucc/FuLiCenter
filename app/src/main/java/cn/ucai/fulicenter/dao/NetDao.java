@@ -27,7 +27,7 @@ public class NetDao {
     }
     public static void downloadGoodsDetail(Context context,OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener){
 
-    OkHttpUtils utils = new OkHttpUtils(context);
+    OkHttpUtils<BoutiqueBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
                 .targetClass(BoutiqueBean[].class)
                 .execute(listener);

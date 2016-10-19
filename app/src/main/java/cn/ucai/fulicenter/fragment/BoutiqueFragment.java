@@ -37,6 +37,7 @@ public class BoutiqueFragment extends Fragment {
     ArrayList<BoutiqueBean> mList;
     BoutiqueAdapter mAdapter;
     LinearLayoutManager llm;
+    int mPageId = 1 ;
     MainActivity mContext  ;
     @Nullable
     @Override
@@ -45,7 +46,7 @@ public class BoutiqueFragment extends Fragment {
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
         mList = new ArrayList<>();
-        mAdapter = new BoutiqueAdapter(mList,mContext);
+        mAdapter = new BoutiqueAdapter(mContext,mList);
         initView();
         initData();
         setListener();
@@ -84,7 +85,44 @@ public class BoutiqueFragment extends Fragment {
            }
        });
     }
+
     private void setListener() {
+        setPullUpListener();
+        setPullDownListener();
+    }
+
+    private void setPullDownListener() {
+        srl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                srl.setRefreshing(true);
+                recyclerView.setVisibility(View.VISIBLE);
+                mPageId=1;
+                downloadNewGoods(I.ACTION_PULL_DOWN);
+            }
+        });
+    }
+
+    private void setPullUpListener() {
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                int lastPosition = llm.findLastVisibleItemPosition();
+                if (newState == RecyclerView.SCROLL_STATE_IDLE &&
+                        lastPosition == mAdapter.getItemCount() - 1 &&
+                        mAdapter.isMore()) {
+                    mPageId++;
+                    L.e(String.valueOf(mAdapter.isMore()));
+                    downloadNewGoods(I.ACTION_PULL_UP);
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private void initData() {

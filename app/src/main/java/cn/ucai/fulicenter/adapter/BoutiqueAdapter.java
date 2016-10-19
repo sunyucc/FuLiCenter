@@ -17,7 +17,6 @@ import butterknife.ButterKnife;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
-import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.views.FooterViewHolder;
 
@@ -39,11 +38,11 @@ public class BoutiqueAdapter extends Adapter {
         notifyDataSetChanged();
     }
 
-    public BoutiqueAdapter(ArrayList<BoutiqueBean> list, Context context) {
-        mList = new ArrayList<>();
-        mContext = context;
-        mList.addAll(list);
+    public BoutiqueAdapter(Context mContext,ArrayList<BoutiqueBean> list) {
+        this.mContext = mContext;
+        this.mList=list;
     }
+
     public void addList(ArrayList<BoutiqueBean> list) {
 
         this.mList.addAll(list);
@@ -71,7 +70,9 @@ public class BoutiqueAdapter extends Adapter {
         } else {
             BoutiqueBean boutiquebean = mList.get(position);
             BoutiqueHolder boutiqueHolder = (BoutiqueHolder) holder;
-            ImageLoader.downloadImg(mContext,boutiqueHolder.ivBoutiqueImg,boutiquebean.getImageurl(),true);
+            ImageLoader.downloadImg(mContext,
+                    ((BoutiqueHolder) holder).ivBoutiqueImg
+                    , boutiquebean.getImageurl(),true);
             boutiqueHolder.tvBoutiqueDescription.setText(boutiquebean.getDescription());
             boutiqueHolder.tvBoutiqueName.setText(boutiquebean.getName());
             boutiqueHolder.tvBoutiqueTitle.setText(boutiquebean.getTitle());
