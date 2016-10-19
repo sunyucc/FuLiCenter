@@ -15,7 +15,7 @@ import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.utils.L;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     @BindView(R.id.rbGoodNews)
     RadioButton rbGoodNews;
     @BindView(R.id.rbBoutique)
@@ -61,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         mRb = new RadioButton[]{rbGoodNews, rbBoutique, rbCategory, rbCart, rbContact};
     }
 

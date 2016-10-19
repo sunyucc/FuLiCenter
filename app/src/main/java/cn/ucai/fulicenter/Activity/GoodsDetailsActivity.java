@@ -23,7 +23,7 @@ import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
-public class GoodsDetailsActivity extends AppCompatActivity {
+public class GoodsDetailsActivity extends BaseActivity {
 
     Context mContext;
     @BindView(R.id.backClickArea)
@@ -57,7 +57,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
             finish();
         }
         mContext = this;
-        initVeiw();
+        initView();
         initData();
         setListener();
 
@@ -114,7 +114,8 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         return urls;
     }
 
-    private void initVeiw() {
+    @Override
+    protected void initView() {
     }
 
     @OnClick(R.id.backClickArea)

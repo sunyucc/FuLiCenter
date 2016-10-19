@@ -10,6 +10,18 @@ public abstract class BlankFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        initView();
+        initData();
+        setListener();
+
         return super.onCreateView(inflater, container, savedInstanceState);
+
     }
+
+    protected abstract void setListener();
+
+    protected abstract void initData();
+
+    protected abstract void initView();
+
 }
