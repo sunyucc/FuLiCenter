@@ -30,7 +30,8 @@
             android:drawableRight="@drawable/arrow2_down"
             android:background="@null"
             android:textColor="@color/white"
-            android:text="分类"/>
+            android:text="分类"
+            android:gravity="center"/>
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/layout_sort"

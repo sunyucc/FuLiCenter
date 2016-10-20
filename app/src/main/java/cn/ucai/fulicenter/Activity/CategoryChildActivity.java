@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.Activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -27,21 +28,17 @@ import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
-//import cn.ucai.fulicenter.views.CatChildFilterButton;
+import cn.ucai.fulicenter.views.CatChildFilterButton;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
+
+//import cn.ucai.fulicenter.views.CatChildFilterButton;
 
 public class CategoryChildActivity extends BaseActivity {
 
     @BindView(R.id.ivReturn)
     ImageView ivReturn;
-//    @BindView(R.id.btnCatChildFilter)
-//    CatChildFilterButton btnCatChildFilter;
     @BindView(R.id.layout_title)
     RelativeLayout layoutTitle;
-    @BindView(R.id.btnPriceSort)
-    Button btnPriceSort;
-    @BindView(R.id.btnAddTimeSort)
-    Button btnAddTimeSort;
     @BindView(R.id.layout_sort)
     LinearLayout layoutSort;
     @BindView(R.id.tv_refresh_hint)
@@ -51,12 +48,21 @@ public class CategoryChildActivity extends BaseActivity {
     @BindView(R.id.srl_category_child)
     SwipeRefreshLayout srlCategoryChild;
 
-     CategoryChildActivity mContext;
+    CategoryChildActivity mContext;
     GoodsAdapter mAdapter;
     ArrayList<CategoryGroupBean> mList;
     int pageId = 1;
     GridLayoutManager glm;
     int catId;
+    @BindView(R.id.btnCatChildFilter)
+    CatChildFilterButton btnCatChildFilter;
+    @BindView(R.id.btnPriceSort)
+    Button btnPriceSort;
+    @BindView(R.id.btnAddTimeSort)
+    Button btnAddTimeSort;
+    boolean addTimeAsc =false;
+    boolean priceAsc =false;
+    int sortBy = I.SORT_BY_ADDTIME_DESC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,9 +70,9 @@ public class CategoryChildActivity extends BaseActivity {
         ButterKnife.bind(this);
         mContext = this;
         mList = new ArrayList<>();
-        mAdapter = new GoodsAdapter(mContext,mList);
-        catId =getIntent().getIntExtra(I.CategoryChild.CAT_ID,0);
-        if(catId == 0){
+        mAdapter = new GoodsAdapter(mContext, mList);
+        catId = getIntent().getIntExtra(I.CategoryChild.CAT_ID, 0);
+        if (catId == 0) {
             finish();
         }
         super.onCreate(savedInstanceState);
@@ -104,14 +110,15 @@ public class CategoryChildActivity extends BaseActivity {
             }
         });
     }
+
     private void downloadCategoryGoods(final int action) {
-        NetDao.downloadCategoryGoods(mContext,catId, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        NetDao.downloadCategoryGoods(mContext, catId, pageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 srlCategoryChild.setRefreshing(false);
                 tvRefreshHint.setVisibility(View.GONE);
                 mAdapter.setMore(true);
-                L.e("result="+result);
+                L.e("result=" + result);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> list = ConvertUtils.array2List(result);
                     if (action != I.ACTION_PULL_UP) {
@@ -133,7 +140,7 @@ public class CategoryChildActivity extends BaseActivity {
                 srlCategoryChild.setRefreshing(false);
                 tvRefreshHint.setVisibility(View.GONE);
                 CommonUtils.showLongToast(error);
-                L.e("error:"+error);
+                L.e("error:" + error);
             }
         });
     }
@@ -144,9 +151,9 @@ public class CategoryChildActivity extends BaseActivity {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 int lastPosition = glm.findLastVisibleItemPosition();
-                if(newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastPosition == mAdapter.getItemCount()-1
-                        && mAdapter.isMore()){
+                if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastPosition == mAdapter.getItemCount() - 1
+                        && mAdapter.isMore()) {
                     pageId++;
                     downloadCategoryGoods(I.ACTION_PULL_UP);
                 }
@@ -156,7 +163,7 @@ public class CategoryChildActivity extends BaseActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 int firstPosition = glm.findFirstVisibleItemPosition();
-                srlCategoryChild.setEnabled(firstPosition==0);
+                srlCategoryChild.setEnabled(firstPosition == 0);
             }
         });
     }
@@ -172,4 +179,36 @@ public class CategoryChildActivity extends BaseActivity {
 
     }
 
+    @OnClick({R.id.btnPriceSort, R.id.btnAddTimeSort})
+    public void onClick(View view) {
+        Drawable right;
+        switch (view.getId()) {
+            case R.id.btnPriceSort:
+                if (priceAsc) {
+                    sortBy = I.SORT_BY_PRICE_ASC;
+                    right = getResources().getDrawable(R.mipmap.arrow_order_up);
+                } else {
+                    sortBy = I.SORT_BY_PRICE_DESC;
+                    right = getResources().getDrawable(R.mipmap.arrow_order_down);
+                }
+                right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
+//                btnPriceSort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
+                priceAsc = !priceAsc
+                ;
+                break;
+            case R.id.btnAddTimeSort:
+                if (addTimeAsc) {
+                    sortBy = I.SORT_BY_ADDTIME_ASC;
+                    right = getResources().getDrawable(R.mipmap.arrow_order_up);
+                } else {
+                    sortBy = I.SORT_BY_ADDTIME_DESC;
+                    right = getResources().getDrawable(R.mipmap.arrow_order_down);
+                }
+                right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
+//                btnAddTimeSort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
+                addTimeAsc  = !addTimeAsc;
+                break;
+        }
+        mAdapter.setSoryBy(sortBy);
+    }
 }
