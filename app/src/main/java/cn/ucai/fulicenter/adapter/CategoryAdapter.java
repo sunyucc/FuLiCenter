@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 
 /**
@@ -91,7 +93,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder holder;
         if (convertView == null) {
             convertView = convertView.inflate(mContext, R.layout.item_category_child, null);
@@ -100,10 +102,16 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ChildViewHolder) convertView.getTag();
         }
-        CategoryChildBean group = getChild(groupPosition,childPosition);
+        final CategoryChildBean group = getChild(groupPosition,childPosition);
         if (group != null) {
             ImageLoader.downloadImg(mContext, holder.mIvChildThumb, group.getImageUrl(), true);
             holder.mTvChildName.setText(group.getName());
+            holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MFGT.gotoCategoryChildActivity(mContext,group.getId());
+                }
+            });
         }
         return convertView;
     }
@@ -143,6 +151,8 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         ImageView mIvChildThumb;
         @BindView(R.id.tv_child_name)
         TextView mTvChildName;
+        @BindView(R.id.relativeLayout)
+        RelativeLayout mRelativeLayout;
 
         ChildViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import cn.ucai.fulicenter.Activity.BoutiqueChildActivity;
+import cn.ucai.fulicenter.Activity.CategoryChildActivity;
 import cn.ucai.fulicenter.Activity.GoodsDetailsActivity;
 import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.I;
@@ -41,5 +42,11 @@ public class MFGT {
         intent.setClass(context, BoutiqueChildActivity.class);
         intent.putExtra(I.Boutique.CAT_ID,bean);
         startActivity(context,intent);
+    }
+    public static void gotoCategoryChildActivity(Context context, int cateId ){
+        Intent intent = new Intent();
+        intent.setClass(context,CategoryChildActivity.class);
+        intent.putExtra(I.CategoryChild.CAT_ID, cateId);
+        context.startActivity(intent);
     }
 }
