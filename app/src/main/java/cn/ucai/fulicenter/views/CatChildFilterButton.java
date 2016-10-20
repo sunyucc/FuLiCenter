@@ -178,15 +178,16 @@ public class CatChildFilterButton extends Button {
             public void onClick(View v) {
                 mbtnTop.setTextColor(Color.WHITE);
                 mbtnTop.setText(groupName);
-                if(mExpandOff){//若分类列表的窗口未打开，则弹出窗口
-                    mAdapter=new CatFilterAdapter(mContext, childList);
+                if(mExpandOff) {//若分类列表的窗口未打开，则弹出窗口
+                    mAdapter = new CatFilterAdapter(mContext, childList);
                     mgvCategory.setAdapter(mAdapter);
                     initPopupWindow();
-                }else{//否则，关闭窗口
-                    if(mPopupWindow.isShowing()){
-                        mPopupWindow.dismiss();
-                    }
                 }
+//                }else{//否则，关闭窗口
+//                    if(mPopupWindow.isShowing()){
+//                        mPopupWindow.dismiss();
+//                    }
+//                }
                 setBtnTopArrow();
             }
         });

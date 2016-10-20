@@ -93,29 +93,30 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+    public View getChildView(final int groupPosition, int childPosition, boolean b, View view, ViewGroup viewGroup) {
         ChildViewHolder holder;
-        if (convertView == null) {
-            convertView = convertView.inflate(mContext, R.layout.item_category_child, null);
-            holder = new ChildViewHolder(convertView);
-            convertView.setTag(holder);
+        if (view == null) {
+            view = View.inflate(mContext, R.layout.item_category_child, null);
+            holder = new ChildViewHolder(view);
+            view.setTag(holder);
         } else {
-            holder = (ChildViewHolder) convertView.getTag();
+            holder = (ChildViewHolder) view.getTag();
         }
-        final CategoryChildBean group = getChild(groupPosition,childPosition);
-        if (group != null) {
-            ImageLoader.downloadImg(mContext, holder.mIvChildThumb, group.getImageUrl(), true);
-            holder.mTvChildName.setText(group.getName());
+        final CategoryChildBean child = getChild(groupPosition, childPosition);
+        if(child!=null){
+            ImageLoader.downloadImg(mContext,holder.mIvChildThumb,child.getImageUrl());
+            holder.mTvChildName.setText(child.getName());
             holder.mRelativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    MFGT.gotoCategoryChildActivity(mContext,group.getId());
+                public void onClick(View view) {
+                    ArrayList<CategoryChildBean> list = mChildList.get(groupPosition);
+                    String groupName = mGroupList.get(groupPosition).getName();
+                    MFGT.gotoCategoryChildActivity(mContext,child.getId(),groupName,list);
                 }
             });
         }
-        return convertView;
+        return view;
     }
-
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
