@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.Activity;
 
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -31,7 +32,6 @@ import cn.ucai.fulicenter.utils.OkHttpUtils;
 import cn.ucai.fulicenter.views.CatChildFilterButton;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
-//import cn.ucai.fulicenter.views.CatChildFilterButton;
 
 public class CategoryChildActivity extends BaseActivity {
 
@@ -192,7 +192,9 @@ public class CategoryChildActivity extends BaseActivity {
                     right = getResources().getDrawable(R.mipmap.arrow_order_down);
                 }
                 right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
-//                btnPriceSort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    btnPriceSort.setCompoundDrawablesRelativeWithIntrinsicBounds(null,null,right,null);
+                }
                 priceAsc = !priceAsc
                 ;
                 break;
@@ -205,7 +207,9 @@ public class CategoryChildActivity extends BaseActivity {
                     right = getResources().getDrawable(R.mipmap.arrow_order_down);
                 }
                 right.setBounds(0, 0, right.getIntrinsicWidth(), right.getIntrinsicHeight());
-//                btnAddTimeSort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                    btnAddTimeSort.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, right, null);
+                }
                 addTimeAsc  = !addTimeAsc;
                 break;
         }
