@@ -25,7 +25,11 @@
             android:name=".Activity.BaseActivity"
             android:label="@string/title_activity_base"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Activity.BoutiqueChildActivity"></activity>
+        <activity android:name=".Activity.BoutiqueChildActivity" />
+        <activity
+            android:name=".Activity.CategoryChildActivity"
+            android:label="@string/title_activity_category_child"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

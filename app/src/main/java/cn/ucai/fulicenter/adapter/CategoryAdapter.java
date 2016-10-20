@@ -88,7 +88,6 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder.mIvIndicator.setImageResource(isExpanded ? R.mipmap.expand_off : R.mipmap.expand_on);
         }
         return convertView;
-
     }
 
     @Override
