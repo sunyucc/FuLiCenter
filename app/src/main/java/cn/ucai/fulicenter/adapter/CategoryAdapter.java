@@ -43,7 +43,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return mChildList != null && mChildList.get(groupPosition) != null ? mChildList.size() : 0;
+        return mChildList != null && mChildList.get(groupPosition) != null ? mChildList.get(groupPosition).size() : 0;
     }
 
     @Override
@@ -79,10 +79,9 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder = new GroupViewHolder(convertView);
             convertView.setTag(holder);
         } else {
-//            convertView.getTag();
             holder = (GroupViewHolder) convertView.getTag();
         }
-        CategoryGroupBean group = (CategoryGroupBean) getGroup(groupPosition);
+        CategoryGroupBean group =  getGroup(groupPosition);
         if (group != null) {
             ImageLoader.downloadImg(mContext, holder.mIvGroupThumb, group.getImageUrl(), true);
             holder.mTvGroupName.setText(group.getName());
@@ -102,7 +101,7 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ChildViewHolder) convertView.getTag();
         }
-        CategoryGroupBean group = (CategoryGroupBean) getGroup(groupPosition);
+        CategoryChildBean group = getChild(groupPosition,childPosition);
         if (group != null) {
             ImageLoader.downloadImg(mContext, holder.mIvChildThumb, group.getImageUrl(), true);
             holder.mTvChildName.setText(group.getName());
@@ -113,6 +112,18 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
+    }
+
+    public void initData(ArrayList<CategoryGroupBean> groupList, ArrayList<ArrayList<CategoryChildBean>> childList) {
+        if (mGroupList != null) {
+            mGroupList.clear();
+        }
+        mGroupList.addAll(groupList);
+        if (mChildList != null) {
+            mChildList.clear();
+        }
+        mChildList.addAll(childList);
+        notifyDataSetChanged();
     }
 
     static class GroupViewHolder {

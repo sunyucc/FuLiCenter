@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.utils.L;
 
@@ -34,6 +35,7 @@ public class MainActivity extends BaseActivity {
     RadioButton[] mRb;
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
+    CategoryFragment mCategoryFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +51,17 @@ public class MainActivity extends BaseActivity {
         mFragments = new Fragment[5];
         mBoutiqueFragment = new BoutiqueFragment();
         mNewGoodsFragment = new NewGoodsFragment();
+        mCategoryFragment = new CategoryFragment();
         mFragments[0] = mNewGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
+        mFragments[2] = mCategoryFragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_con, mNewGoodsFragment)
                 .add(R.id.fragment_con, mBoutiqueFragment)
+                .add(R.id.fragment_con, mCategoryFragment)
                 .hide(mBoutiqueFragment)
+                .hide(mCategoryFragment)
                 .show(mNewGoodsFragment)
                 .commit();
     }
