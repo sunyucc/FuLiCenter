@@ -8,6 +8,9 @@ import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.bean.Result;
+import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MD5;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 public class NetDao {
     public static void downloadNewGoods(Context context, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
@@ -67,5 +70,18 @@ public class NetDao {
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(NewGoodsBean[].class)
                 .execute(listener);
+    }
+
+    public static void register(Context context, String username, String nickname, String password, OkHttpUtils.OnCompleteListener<Result> listener) {
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        L.e(username+nickname+password+"");
+        utils.setRequestUrl(I.REQUEST_REGISTER)
+                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.NICK,nickname)
+                .addParam(I.User.PASSWORD, MD5.getMessageDigest(password))
+                .post()
+                .targetClass(Result.class)
+                .execute(listener);
+
     }
 }

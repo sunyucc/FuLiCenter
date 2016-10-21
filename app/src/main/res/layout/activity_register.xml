@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/common_head_title" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,15 +78,10 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_Register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onRegister"
         android:text="注册" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="onUnregister"
-        android:text="取消注册" />
 
 </LinearLayout>
