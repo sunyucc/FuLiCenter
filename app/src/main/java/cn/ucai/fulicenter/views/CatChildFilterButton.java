@@ -104,7 +104,8 @@ public class CatChildFilterButton extends Button {
                                 ArrayList<CategoryChildBean> list) {
             super();
             this.context = context;
-            this.Children = list;
+            Children = new ArrayList<>();
+            Children.addAll(list);
         }
 
         @Override
