@@ -56,11 +56,11 @@ public class CatChildFilterButton extends Button {
     private void initPopupWindow() {
         mPopupWindow=new PopupWindow();
         mPopupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        if(mgvCategory.getAdapter().getCount()<16){
+//        if(mgvCategory.getAdapter().getCount()<16){
             mPopupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        }else{
-            mPopupWindow.setHeight(ConvertUtils.px2dp(mContext, 200));
-        }
+//        }else{
+//            mPopupWindow.setHeight(ConvertUtils.px2dp(mContext, 200));
+//        }
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(0xbb000000));
@@ -183,12 +183,11 @@ public class CatChildFilterButton extends Button {
                     mAdapter = new CatFilterAdapter(mContext, childList);
                     mgvCategory.setAdapter(mAdapter);
                     initPopupWindow();
+                }else{//否则，关闭窗口
+                    if(mPopupWindow.isShowing()){
+                        mPopupWindow.dismiss();
+                    }
                 }
-//                }else{//否则，关闭窗口
-//                    if(mPopupWindow.isShowing()){
-//                        mPopupWindow.dismiss();
-//                    }
-//                }
                 setBtnTopArrow();
             }
         });

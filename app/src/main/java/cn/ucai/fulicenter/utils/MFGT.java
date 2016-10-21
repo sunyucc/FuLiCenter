@@ -10,6 +10,7 @@ import cn.ucai.fulicenter.Activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.Activity.CategoryChildActivity;
 import cn.ucai.fulicenter.Activity.GoodsDetailsActivity;
 import cn.ucai.fulicenter.Activity.MainActivity;
+import cn.ucai.fulicenter.Activity.RegisterActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -39,6 +40,10 @@ public class MFGT {
     public static void startActivity(Context context, Intent intent) {
             context.startActivity(intent);
         ((MainActivity)context).overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+    }
+    public static void startRegisterActivity(Context context, Intent intent) {
+            context.startActivity(intent);
+        ((RegisterActivity)context).overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
     public static void gotoBoutiqueChildActivity(Context context, BoutiqueBean bean){
         Intent intent = new Intent();

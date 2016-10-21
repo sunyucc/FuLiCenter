@@ -29,6 +29,10 @@
         <activity
             android:name=".Activity.CategoryChildActivity"
             android:label="@string/title_activity_category_child"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:label="@string/title_activity_register"
             android:theme="@style/AppTheme"></activity>
     </application>
 

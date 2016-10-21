@@ -13,6 +13,7 @@ import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
+import cn.ucai.fulicenter.fragment.LoginFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.utils.L;
 
@@ -36,6 +37,7 @@ public class MainActivity extends BaseActivity {
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mCategoryFragment;
+    LoginFragment mLoginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,14 +54,18 @@ public class MainActivity extends BaseActivity {
         mBoutiqueFragment = new BoutiqueFragment();
         mNewGoodsFragment = new NewGoodsFragment();
         mCategoryFragment = new CategoryFragment();
+        mLoginFragment = new LoginFragment();
         mFragments[0] = mNewGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
         mFragments[2] = mCategoryFragment;
+        mFragments[3] = mLoginFragment;
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragment_con, mNewGoodsFragment)
                 .add(R.id.fragment_con, mBoutiqueFragment)
                 .add(R.id.fragment_con, mCategoryFragment)
+                .add(R.id.fragment_con, mLoginFragment)
+                .hide(mLoginFragment)
                 .hide(mBoutiqueFragment)
                 .hide(mCategoryFragment)
                 .show(mNewGoodsFragment)
