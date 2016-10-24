@@ -52,10 +52,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     }
 
-
-    public void closeDB(){
-        if (instance != null) {
-            instance.close();
+    public static void closeDB(){
+        if(instance!=null){
+            SQLiteDatabase db = instance.getWritableDatabase();
+            db.close();
             instance = null;
         }
     }
