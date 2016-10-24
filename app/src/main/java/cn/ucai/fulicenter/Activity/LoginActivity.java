@@ -20,6 +20,7 @@ import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
+import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.DisplayUtils;
 
 
@@ -64,6 +65,7 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogin:
+                checkedInput();
                 break;
             case R.id.btnRegister:
                 MFGT.gotoRegisterActivity(this);
@@ -91,9 +93,10 @@ public class LoginActivity extends BaseActivity {
         pd.setMessage(getResources().getString(R.string.logining));
         pd.show();
         L.e(TAG,"username="+username+",password="+password);
-        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<Result>() {
+        NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(Result result) {
+            public void onSuccess(String str) {
+                Result result = ResultUtils.getResultFromJson(str, Result.class);
                 pd.dismiss();
                 L.e(TAG,"result="+result);
                 if(result==null){
