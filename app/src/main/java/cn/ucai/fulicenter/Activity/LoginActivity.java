@@ -11,10 +11,13 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.User;
+import cn.ucai.fulicenter.dao.SharePrefrenceUtils;
+import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
@@ -95,8 +98,8 @@ public class LoginActivity extends BaseActivity {
         L.e(TAG,"username="+username+",password="+password);
         NetDao.login(mContext, username, password, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
-            public void onSuccess(String str) {
-                Result result = ResultUtils.getResultFromJson(str, User.class);
+            public void onSuccess(String s) {
+                Result result = ResultUtils.getResultFromJson(s,User.class);
                 L.e(TAG,"result="+result);
                 if(result==null){
                     CommonUtils.showLongToast(R.string.login_fail);
@@ -104,7 +107,15 @@ public class LoginActivity extends BaseActivity {
                     if(result.isRetMsg()){
                         User user = (User) result.getRetData();
                         L.e(TAG,"user="+user);
-                        MFGT.finish(mContext);
+                        UserDao dao = new UserDao(mContext);
+                        boolean isSuccess = dao.saveUser(user);
+                        if(isSuccess){
+                            SharePrefrenceUtils.getInstence(mContext).saveUser(user.getMuserName());
+                            FuLiCenterApplication.setUser(user);
+                            MFGT.finish(mContext);
+                        }else{
+                            CommonUtils.showLongToast(R.string.user_database_error);
+                        }
                     }else{
                         if(result.getRetCode()==I.MSG_LOGIN_UNKNOW_USER){
                             CommonUtils.showLongToast(R.string.login_fail_unknow_user);
@@ -115,7 +126,7 @@ public class LoginActivity extends BaseActivity {
                         }
                     }
                 }
-                    pd.dismiss();
+                pd.dismiss();
             }
 
             @Override
@@ -127,10 +138,11 @@ public class LoginActivity extends BaseActivity {
         });
     }
 
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_REGIESTER) {
+        if (resultCode == RESULT_OK && requestCode == I.REQUEST_CODE_REGISTER) {
             String name = data.getStringExtra(I.User.USER_NAME);
             mUserName.setText(name);
 

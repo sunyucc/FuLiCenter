@@ -10,6 +10,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+
 public final class BitmapUtils {
 	/**
 	 * 按指定尺寸转换图片
@@ -67,6 +68,9 @@ public final class BitmapUtils {
 	 */
 	public static void saveBitmap(Bitmap bitmap,String path) {
 		File file=new File(path);
+		L.e("file="+file);
+		L.e("file.getParentFile="+file.getParentFile());
+		L.e("file.exists="+file.getParentFile().exists());
 		if(!file.getParentFile().exists()){//若不存在目录，则创建
 			boolean isSuccess = file.getParentFile().mkdirs();
 			if(!isSuccess){//若文件所在目录创建失败，则返回
