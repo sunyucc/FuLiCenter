@@ -20,7 +20,7 @@ import cn.ucai.fulicenter.bean.CategoryChildBean;
 public class MFGT {
     public static void finish(Activity activity){
         activity.finish();
-        activity.overridePendingTransition(R.anim.push_right_in,R.anim.push_right_out);
+        activity.overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
     }
     public static void gotoMainActivity(Activity context){
         startActivity(context, MainActivity.class);
@@ -60,16 +60,19 @@ public class MFGT {
         intent.putExtra(I.CategoryChild.ID,list);
         startActivity(context,intent);
     }
-    public static void gotoRegisterActivity(Context context){
-        Intent intent = new Intent();
-        intent.setClass(context, RegisterActivity.class);
-        startActivity(context,intent);
-    }
     public static void gotoLoginActivity(Activity context){
+        startActivity(context,LoginActivity.class);
+    }
+    public static void gotoRegisterActivity(Activity context){
         Intent intent = new Intent();
         intent.setClass(context,RegisterActivity.class);
-        context.startActivityForResult();
-        startActivity(context,RegisterActivity.class);
+        startActivityForResult(context, intent, I.REQUEST_CODE_REGIESTER);
+
+    }
+
+    private static void startActivityForResult(Activity context, Intent intent, int requestCode) {
+        context.startActivityForResult(intent,requestCode);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
 
 }

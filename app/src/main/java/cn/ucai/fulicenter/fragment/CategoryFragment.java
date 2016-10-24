@@ -17,14 +17,14 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.CategoryAdapter;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
-import cn.ucai.fulicenter.dao.NetDao;
+import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 
 /**
  */
-public class CategoryFragment extends BlankFragment {
+public class CategoryFragment extends BaseFragment {
     @BindView(R.id.elvCategory)
     ExpandableListView mElvCategory;
     CategoryAdapter mAdapter;

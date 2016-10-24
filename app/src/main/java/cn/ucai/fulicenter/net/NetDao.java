@@ -1,4 +1,4 @@
-package cn.ucai.fulicenter.dao;
+package cn.ucai.fulicenter.net;
 
 import android.content.Context;
 
@@ -9,7 +9,6 @@ import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.bean.Result;
-import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MD5;
 import cn.ucai.fulicenter.utils.OkHttpUtils;
 public class NetDao {
@@ -23,7 +22,7 @@ public class NetDao {
                 .execute(listener);
     }
     public static void downloadNewGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_NEW_BOUTIQUE_GOODS)
                 .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(catId))
                 .addParam(I.PAGE_ID,String.valueOf(pageId))
@@ -56,14 +55,14 @@ public class NetDao {
     }
     public static void downloadCategoryChild(Context context,int  parentId,OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener){
 
-    OkHttpUtils utils = new OkHttpUtils(context);
+    OkHttpUtils<CategoryChildBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
                 .targetClass(CategoryChildBean[].class)
                 .addParam(I.CategoryChild.PARENT_ID,String.valueOf(parentId))
                 .execute(listener);
     }
     public static void downloadCategoryGoods(Context context,int catId, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
-        OkHttpUtils utils = new OkHttpUtils(context);
+        OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_FIND_GOODS_DETAILS)
                 .addParam(I.NewAndBoutiqueGoods.CAT_ID,String.valueOf(catId))
                 .addParam(I.PAGE_ID,String.valueOf(pageId))
@@ -72,16 +71,24 @@ public class NetDao {
                 .execute(listener);
     }
 
-    public static void register(Context context, String username, String nickname, String password, OkHttpUtils.OnCompleteListener<Result> listener) {
+
+    public static void register(Context context, String username, String nickname, String password, OkHttpUtils.OnCompleteListener<Result> listener){
         OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
-        L.e(username+nickname+password+"");
         utils.setRequestUrl(I.REQUEST_REGISTER)
                 .addParam(I.User.USER_NAME,username)
                 .addParam(I.User.NICK,nickname)
                 .addParam(I.User.PASSWORD, MD5.getMessageDigest(password))
+                .targetClass(Result.class)
                 .post()
+                .execute(listener);
+    }
+
+    public static void login(Context context, String username, String password, OkHttpUtils.OnCompleteListener<Result> listener){
+        OkHttpUtils<Result> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_LOGIN)
+                .addParam(I.User.USER_NAME,username)
+                .addParam(I.User.PASSWORD,MD5.getMessageDigest(password))
                 .targetClass(Result.class)
                 .execute(listener);
-
     }
 }

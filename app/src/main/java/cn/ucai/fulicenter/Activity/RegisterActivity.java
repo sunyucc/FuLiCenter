@@ -1,19 +1,18 @@
 package cn.ucai.fulicenter.Activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
-import cn.ucai.fulicenter.dao.NetDao;
+import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -24,13 +23,13 @@ public class RegisterActivity extends BaseActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
     @BindView(R.id.btn_Register)
     Button btnRegister;
-    @BindView(R.id.etUserName)
+    @BindView(R.id.et_UserName)
     EditText etUserName;
-    @BindView(R.id.etNick)
+    @BindView(R.id.et_Nick)
     EditText etNick;
-    @BindView(R.id.etPassword)
+    @BindView(R.id.et_Password)
     EditText etPassword;
-    @BindView(R.id.etConfirmPassword)
+    @BindView(R.id.et_ConfirmPassword)
     EditText etConfirmPassword;
     String username;
     String nickname;
@@ -41,8 +40,8 @@ public class RegisterActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_register);
         mContext = this;
-        super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -62,32 +61,33 @@ public class RegisterActivity extends BaseActivity {
 
     @OnClick(R.id.btn_Register)
     public void onClick() {
-        String username = etUserName.getText().toString().trim();
-        String nickname = etNick.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
+        username = etUserName.getText().toString().trim();
+        nickname = etNick.getText().toString().trim();
+        password = etPassword.getText().toString().trim();
         String confirm = etConfirmPassword.getText().toString().trim();
-        if (TextUtils.isEmpty(username)) {
-            CommonUtils.showLongToast(R.string.user_name_connot_be_empty);
+
+        if(TextUtils.isEmpty(username)){
+            CommonUtils.showShortToast(R.string.user_name_connot_be_empty);
             etUserName.requestFocus();
             return;
-        } else if (!username.matches("[a-zA-Z]\\w{5,15}")) {
-            CommonUtils.showLongToast(R.string.illegal_user_name);
+        }else if(!username.matches("[a-zA-Z]\\w{5,15}")){
+            CommonUtils.showShortToast(R.string.illegal_user_name);
             etUserName.requestFocus();
             return;
-        } else if (TextUtils.isEmpty(nickname)) {
-            CommonUtils.showLongToast(R.string.nick_name_connot_be_empty);
+        }else if(TextUtils.isEmpty(nickname)){
+            CommonUtils.showShortToast(R.string.nick_name_connot_be_empty);
             etNick.requestFocus();
             return;
-        } else if (TextUtils.isEmpty(password)) {
-            CommonUtils.showLongToast(R.string.password_connot_be_empty);
+        }else if(TextUtils.isEmpty(password)){
+            CommonUtils.showShortToast(R.string.password_connot_be_empty);
             etPassword.requestFocus();
             return;
-        } else if (TextUtils.isEmpty(confirm)) {
-            CommonUtils.showLongToast(R.string.confirm_password_connot_be_empty);
+        }else if(TextUtils.isEmpty(confirm)){
+            CommonUtils.showShortToast(R.string.confirm_password_connot_be_empty);
             etConfirmPassword.requestFocus();
             return;
-        } else if (!password.equals(confirm)) {
-            CommonUtils.showLongToast(R.string.two_input_password);
+        }else if(!password.equals(confirm)){
+            CommonUtils.showShortToast(R.string.two_input_password);
             etConfirmPassword.requestFocus();
             return;
         }
@@ -102,24 +102,25 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onSuccess(Result result) {
                 pd.dismiss();
-                if (result == null) {
-                    CommonUtils.showLongToast(R.string.register_fail);
-                } else {
-                    if (result.isRetMsg()) {
+                if(result==null){
+                    CommonUtils.showShortToast(R.string.register_fail);
+                }else{
+                    if(result.isRetMsg()){
+                        CommonUtils.showLongToast(R.string.register_success);
+                        setResult(RESULT_OK,new Intent().putExtra(I.User.USER_NAME,username));
                         MFGT.finish(mContext);
-
-                    } else {
+                    }else{
+                        CommonUtils.showLongToast(R.string.register_fail_exists);
                         etUserName.requestFocus();
                     }
                 }
-                MFGT.gotoMainActivity(mContext);
             }
 
             @Override
             public void onError(String error) {
                 pd.dismiss();
-                CommonUtils.showLongToast(error);
-                L.e(TAG, "" + error);
+                CommonUtils.showShortToast(error);
+                L.e(TAG,"register error="+error);
             }
         });
     }

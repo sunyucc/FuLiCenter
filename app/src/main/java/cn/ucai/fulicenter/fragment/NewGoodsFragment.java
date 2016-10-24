@@ -18,7 +18,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.GoodsAdapter;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
-import cn.ucai.fulicenter.dao.NetDao;
+import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
@@ -29,7 +29,7 @@ import cn.ucai.fulicenter.views.SpaceItemDecoration;
  * Created by sunyu on 2016/10/17.
  */
 
-public class NewGoodsFragment extends BlankFragment {
+public class NewGoodsFragment extends BaseFragment {
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
     @BindView(R.id.tv_refresh)
