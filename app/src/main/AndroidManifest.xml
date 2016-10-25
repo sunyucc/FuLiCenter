@@ -27,7 +27,8 @@
         <activity
             android:name=".Activity.PersonalInformationActivity"
             android:label="@string/title_activity_personal_information"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
+        <activity android:name=".Activity.ReviseNickActivity"></activity>
     </application>
 
 </manifest>

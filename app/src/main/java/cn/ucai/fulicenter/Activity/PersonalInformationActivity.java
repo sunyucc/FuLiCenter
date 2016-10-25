@@ -13,6 +13,7 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.User;
+import cn.ucai.fulicenter.dao.SharePrefrenceUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -29,6 +30,7 @@ public class PersonalInformationActivity extends BaseActivity {
     PersonalInformationActivity mContext;
     @BindView(R.id.btn_login)
     Button mBtnLogin;
+    User user = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,7 @@ public class PersonalInformationActivity extends BaseActivity {
     @Override
     protected void initData() {
         DisplayUtils.initBackWithTitle(this, "设置");
-        User user = FuLiCenterApplication.getUser();
+        user = FuLiCenterApplication.getUser();
         if (user != null) {
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
             userAccount.setText(user.getMuserName());
@@ -70,11 +72,20 @@ public class PersonalInformationActivity extends BaseActivity {
                 CommonUtils.showShortToast("账户名不能修改");
                 break;
             case R.id.user_nickname:
-
+                MFGT.gotoReviseNickActivity(mContext);
                 break;
             case R.id.btn_login:
-                MFGT.gotoLoginActivity(mContext);
+                logout();
                 break;
         }
+    }
+
+    private void logout() {
+        if (user != null) {
+            SharePrefrenceUtils.getInstence(mContext).removeUser();
+            FuLiCenterApplication.setUser(null);
+            MFGT.gotoLoginActivity(mContext);
+        }
+        finish();
     }
 }

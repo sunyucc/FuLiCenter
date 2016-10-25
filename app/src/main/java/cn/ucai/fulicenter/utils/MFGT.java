@@ -13,6 +13,7 @@ import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.Activity.LoginActivity;
 import cn.ucai.fulicenter.Activity.PersonalInformationActivity;
 import cn.ucai.fulicenter.Activity.RegisterActivity;
+import cn.ucai.fulicenter.Activity.ReviseNickActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -85,5 +86,9 @@ public class MFGT {
 
     public static void gotoPersonalInformationActivity(Activity context) {
         startActivity(context, PersonalInformationActivity.class);
+    }
+
+    public static void gotoReviseNickActivity(Activity context) {
+        startActivity(context, ReviseNickActivity.class);
     }
 }
