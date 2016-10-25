@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.utils;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.style.UpdateAppearance;
 
 import java.util.ArrayList;
 
@@ -89,6 +90,6 @@ public class MFGT {
     }
 
     public static void gotoReviseNickActivity(Activity context) {
-        startActivity(context, ReviseNickActivity.class);
+        startActivityForResult(context, new Intent(context, ReviseNickActivity.class),I.REQUEST_CODE_NICK);
     }
 }
