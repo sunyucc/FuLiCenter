@@ -63,6 +63,12 @@ public class PersonalCenterFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    @Override
     protected void setListener() {
 
     }

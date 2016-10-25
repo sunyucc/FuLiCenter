@@ -14,6 +14,7 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.User;
 import cn.ucai.fulicenter.utils.CommonUtils;
+import cn.ucai.fulicenter.views.DisplayUtils;
 
 public class ReviseNickActivity extends Activity {
     @BindView(R.id.btn_revise)
@@ -22,18 +23,22 @@ public class ReviseNickActivity extends Activity {
     Button btnBack;
     @BindView(R.id.et_revise_nick)
     EditText etReviseNick;
-
+    User user;
+    ReviseNickActivity mContext;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revise_nick);
         ButterKnife.bind(this);
+        mContext =this ;
         initView();
+
 
     }
 
     private void initView() {
-        User user = FuLiCenterApplication.getUser();
+        DisplayUtils.initBackWithTitle(this, "修改昵称");
+        user = FuLiCenterApplication.getUser();
         etReviseNick.setText(user.getMuserNick());
     }
 
@@ -47,7 +52,8 @@ public class ReviseNickActivity extends Activity {
                     etReviseNick.requestFocus();
                     return;
                 } else {
-
+                    user.setMuserNick(nickname);
+                    finish();
                 }
                     break;
                     case R.id.btn_back:

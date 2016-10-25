@@ -61,7 +61,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void setListener() {
-
     }
 
     @OnClick({R.id.btnLogin, R.id.btnRegister})

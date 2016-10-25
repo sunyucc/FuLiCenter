@@ -43,11 +43,23 @@ public class PersonalInformationActivity extends BaseActivity {
     @Override
     protected void initView() {
 
+        DisplayUtils.initBackWithTitle(this, "设置");
     }
 
     @Override
     protected void initData() {
-        DisplayUtils.initBackWithTitle(this, "设置");
+        user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
+            userAccount.setText(user.getMuserName());
+            userNickname.setText(user.getMuserNick());
+        } else {
+            finish();
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
         user = FuLiCenterApplication.getUser();
         if (user != null) {
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
@@ -80,12 +92,12 @@ public class PersonalInformationActivity extends BaseActivity {
         }
     }
 
+
     private void logout() {
         if (user != null) {
             SharePrefrenceUtils.getInstence(mContext).removeUser();
             FuLiCenterApplication.setUser(null);
             MFGT.gotoLoginActivity(mContext);
         }
-        finish();
     }
 }

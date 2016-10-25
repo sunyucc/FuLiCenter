@@ -36,8 +36,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.rbContact)
     RadioButton rbContact;
     Fragment[] mFragments;
-    int index;
-    int currentIndex;
+    int index=0;
+    int currentIndex ;
     RadioButton[] mRb;
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
         mBoutiqueFragment = new BoutiqueFragment();
         mNewGoodsFragment = new NewGoodsFragment();
         mCategoryFragment = new CategoryFragment();
-        mPersonalCenterFragment  =new PersonalCenterFragment();
+        mPersonalCenterFragment = new PersonalCenterFragment();
         mFragment = new Fragment();
         mFragments[0] = mNewGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
@@ -72,8 +72,6 @@ public class MainActivity extends BaseActivity {
                 .add(R.id.fragment_con, mNewGoodsFragment)
                 .add(R.id.fragment_con, mBoutiqueFragment)
                 .add(R.id.fragment_con, mCategoryFragment)
-                .add(R.id.fragment_con,mPersonalCenterFragment)
-                .hide(mPersonalCenterFragment)
                 .hide(mBoutiqueFragment)
                 .hide(mCategoryFragment)
                 .show(mNewGoodsFragment)
@@ -112,17 +110,18 @@ public class MainActivity extends BaseActivity {
             case R.id.rbContact:
                 if (FuLiCenterApplication.getUser() == null) {
                     MFGT.gotoLoginActivity(this);
-                }else{
-
-                index = 4;
+                }else {
+                    index = 4;
                 }
                 break;
         }
+        L.e(TAG,"000000000000000000000000000000000000000000000000      "+index);
         setFragment();
 
     }
 
     private void setFragment() {
+        L.e(TAG,"index:"+index);
         if (index != currentIndex) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.hide(mFragments[currentIndex]);
@@ -149,18 +148,23 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        L.e(TAG,"onResume...");
+        L.e(TAG, "onResume...");
+        if (index == 4 && FuLiCenterApplication.getUser() == null) {
+            index = 0;
+        }
         setFragment();
     }
+
     @Override
     public void onBackPressed() {
         finish();
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        L.e(TAG,"onActivityResult,requestCode="+requestCode);
-        if(requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser()!=null){
+        L.e(TAG, "onActivityResult,requestCode=" + requestCode);
+        if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser() != null) {
             index = 4;
         }
     }
