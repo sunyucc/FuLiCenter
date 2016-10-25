@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -49,25 +50,17 @@ public class PersonalInformationActivity extends BaseActivity {
     @Override
     protected void initData() {
         user = FuLiCenterApplication.getUser();
-        if (user != null) {
-            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
-            userAccount.setText(user.getMuserName());
-            userNickname.setText(user.getMuserNick());
-        } else {
+        if (user == null) {
             finish();
+        } else {
+            showInfo();
         }
     }
+
     @Override
     protected void onResume() {
         super.onResume();
-        user = FuLiCenterApplication.getUser();
-        if (user != null) {
-            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
-            userAccount.setText(user.getMuserName());
-            userNickname.setText(user.getMuserNick());
-        } else {
-            finish();
-        }
+        showInfo();
     }
 
     @Override
@@ -98,6 +91,13 @@ public class PersonalInformationActivity extends BaseActivity {
             SharePrefrenceUtils.getInstence(mContext).removeUser();
             FuLiCenterApplication.setUser(null);
             MFGT.gotoLoginActivity(mContext);
+        }
+    }
+    private void showInfo() {
+        if (user != null) {
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
+            userAccount.setText(user.getMuserName());
+            userNickname.setText(user.getMuserNick());
         }
     }
 }

@@ -115,7 +115,6 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
         }
-        L.e(TAG,"000000000000000000000000000000000000000000000000      "+index);
         setFragment();
 
     }
