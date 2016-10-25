@@ -11,6 +11,7 @@ import cn.ucai.fulicenter.Activity.CategoryChildActivity;
 import cn.ucai.fulicenter.Activity.GoodsDetailsActivity;
 import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.Activity.LoginActivity;
+import cn.ucai.fulicenter.Activity.PersonalInformationActivity;
 import cn.ucai.fulicenter.Activity.RegisterActivity;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
@@ -82,4 +83,7 @@ public class MFGT {
         startActivityForResult(context,intent,I.REQUEST_CODE_LOGIN);
     }
 
+    public static void gotoPersonalInformationActivity(Activity context) {
+        startActivity(context, PersonalInformationActivity.class);
+    }
 }

@@ -32,5 +32,6 @@
     <string name="title_activity_category_child">CategoryChildActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_personal_information">PersonalInformationActivity</string>
 
 </resources>

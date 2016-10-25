@@ -24,9 +24,9 @@
             android:id="@+id/tv_common_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
             android:text="商品详情"
+            android:layout_gravity="center"
             android:textSize="18dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
     </LinearLayout>
 </RelativeLayout>
