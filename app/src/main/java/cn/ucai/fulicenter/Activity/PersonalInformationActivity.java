@@ -2,15 +2,20 @@ package cn.ucai.fulicenter.Activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.User;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.DisplayUtils;
 
 public class PersonalInformationActivity extends BaseActivity {
@@ -21,13 +26,15 @@ public class PersonalInformationActivity extends BaseActivity {
     TextView userAccount;
     @BindView(R.id.user_nickname)
     TextView userNickname;
-    Context mContext;
+    PersonalInformationActivity mContext;
+    @BindView(R.id.btn_login)
+    Button mBtnLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_personal_information);
         ButterKnife.bind(this);
-        mContext =this;
+        mContext = this;
         super.onCreate(savedInstanceState);
     }
 
@@ -40,9 +47,13 @@ public class PersonalInformationActivity extends BaseActivity {
     protected void initData() {
         DisplayUtils.initBackWithTitle(this, "设置");
         User user = FuLiCenterApplication.getUser();
-        ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
-        userAccount.setText(user.getMuserName());
-        userNickname.setText(user.getMuserNick());
+        if (user != null) {
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user), mContext, userHeadAvatar);
+            userAccount.setText(user.getMuserName());
+            userNickname.setText(user.getMuserNick());
+        } else {
+            finish();
+        }
     }
 
     @Override
@@ -50,4 +61,20 @@ public class PersonalInformationActivity extends BaseActivity {
 
     }
 
+    @OnClick({R.id.user_head_avatar, R.id.user_account, R.id.user_nickname,R.id.btn_login})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.user_head_avatar:
+                break;
+            case R.id.user_account:
+                CommonUtils.showShortToast("账户名不能修改");
+                break;
+            case R.id.user_nickname:
+
+                break;
+            case R.id.btn_login:
+                MFGT.gotoLoginActivity(mContext);
+                break;
+        }
+    }
 }
