@@ -112,6 +112,7 @@ public class LoginActivity extends BaseActivity {
                             SharePrefrenceUtils.getInstence(mContext).saveUser(user.getMuserName());
                             FuLiCenterApplication.setUser(user);
                             MFGT.finish(mContext);
+                            MFGT.gotoMainActivity(mContext);
                         }else{
                             CommonUtils.showLongToast(R.string.user_database_error);
                         }
@@ -146,5 +147,10 @@ public class LoginActivity extends BaseActivity {
             mUserName.setText(name);
 
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        MFGT.gotoMainActivity(mContext);
     }
 }

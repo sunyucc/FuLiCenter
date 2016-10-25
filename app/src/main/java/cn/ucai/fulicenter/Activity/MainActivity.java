@@ -36,8 +36,8 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.rbContact)
     RadioButton rbContact;
     Fragment[] mFragments;
-    int index=0;
-    int currentIndex ;
+    int index = 0;
+    int currentIndex;
     RadioButton[] mRb;
     NewGoodsFragment mNewGoodsFragment;
     BoutiqueFragment mBoutiqueFragment;
@@ -110,7 +110,7 @@ public class MainActivity extends BaseActivity {
             case R.id.rbContact:
                 if (FuLiCenterApplication.getUser() == null) {
                     MFGT.gotoLoginActivity(this);
-                }else {
+                } else {
                     index = 4;
                 }
                 break;
@@ -120,7 +120,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setFragment() {
-        L.e(TAG,"index:"+index);
+        L.e(TAG, "index:" + index);
         if (index != currentIndex) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.hide(mFragments[currentIndex]);
@@ -147,10 +147,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        L.e(TAG, "index =" + index);
         L.e(TAG, "onResume...");
         if (index == 4 && FuLiCenterApplication.getUser() == null) {
             index = 0;
         }
+        L.e(TAG, "index =" + index);
         setFragment();
     }
 

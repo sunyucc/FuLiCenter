@@ -33,10 +33,9 @@ public class ReviseNickActivity extends Activity {
     @BindView(R.id.btn_back)
     Button btnBack;
     @BindView(R.id.et_revise_nick)
-    EditText etReviseNick;
+        EditText etReviseNick;
     User user = null;
     ReviseNickActivity mContext;
-    String nickname = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,12 @@ public class ReviseNickActivity extends Activity {
     private void initView() {
         DisplayUtils.initBackWithTitle(this, "修改昵称");
         user = FuLiCenterApplication.getUser();
-        etReviseNick.setText(user.getMuserNick());
+        if(user!=null){
+            etReviseNick.setText(user.getMuserNick());
+            etReviseNick.setSelectAllOnFocus(true);
+        }else{
+            finish();
+        }
     }
 
 
@@ -58,16 +62,16 @@ public class ReviseNickActivity extends Activity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_revise:
-                nickname = etReviseNick.getText().toString().trim();
-                if (TextUtils.isEmpty(nickname)) {
-                    CommonUtils.showShortToast(R.string.nick_name_connot_be_empty);
-                    if (nickname.equals(user.getMuserNick())) {
-                        etReviseNick.requestFocus();
+                if(user!=null){
+                    String nick =etReviseNick.getText().toString().trim();
+                    if(nick.equals(user.getMuserNick())){
+                        CommonUtils.showLongToast("昵称未作更改"  );
+                    }else if(TextUtils.isEmpty(nick)){
+                        CommonUtils.showLongToast(R.string.nick_name_connot_be_empty);
+                    }else{
+                        updateNick(nick);
                     }
-                    return;
                 }
-                updateNick();
-                finish();
                 break;
             case R.id.btn_back:
                 finish();
@@ -76,36 +80,28 @@ public class ReviseNickActivity extends Activity {
 
     }
 
-    private void updateNick() {
+    private void updateNick(String nickname) {
         final ProgressDialog pd = new ProgressDialog(mContext);
         pd.setMessage("更新中");
         pd.show();
         NetDao.updateNick(mContext, user.getMuserName(), nickname, new OkHttpUtils.OnCompleteListener<String>() {
             @Override
             public void onSuccess(String s) {
-                Result result = ResultUtils.getResultFromJson(s,User.class);
-                L.e(TAG,"result="+result);
-                if(result==null){
-                    CommonUtils.showLongToast(R.string.user_database_error);
-                }else{
-                    if(result.isRetMsg()){
+                Result result = ResultUtils.getResultFromJson(s, User.class);
+                L.e(TAG, "result=" + result);
+                if (result == null) {
+                } else {
+                    if (result.isRetMsg()) {
                         User u = (User) result.getRetData();
-                        L.e(TAG,"user="+u);
+                        L.e(TAG, "user=" + u);
                         UserDao dao = new UserDao(mContext);
-                        boolean isSuccess = dao.saveUser(u);
-                        if(isSuccess){
+                        boolean isSuccess = dao.updateUser(u);
+                        if (isSuccess) {
                             FuLiCenterApplication.setUser(u);
+                            setResult(RESULT_OK);
                             MFGT.finish(mContext);
-                        }else{
+                        } else {
                             CommonUtils.showLongToast(R.string.user_database_error);
-                        }
-                    }else{
-                        if(result.getRetCode()== I.MSG_LOGIN_UNKNOW_USER){
-                            CommonUtils.showLongToast(R.string.login_fail_unknow_user);
-                        }else if(result.getRetCode()==I.MSG_LOGIN_ERROR_PASSWORD){
-                            CommonUtils.showLongToast(R.string.login_fail_error_password);
-                        }else{
-                            CommonUtils.showLongToast(R.string.login_fail);
                         }
                     }
                 }
@@ -116,7 +112,7 @@ public class ReviseNickActivity extends Activity {
             public void onError(String error) {
                 pd.dismiss();
                 CommonUtils.showLongToast(error);
-                L.e(TAG,"error="+error);
+                L.e(TAG, "error=" + error);
             }
         });
     }

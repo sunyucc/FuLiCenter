@@ -33,5 +33,9 @@
     <string name="title_activity_register">RegisterActivity</string>
     <string name="title_activity_splash">SplashActivity</string>
     <string name="title_activity_personal_information">PersonalInformationActivity</string>
+    <string name="update_user_nick_success">更新用户昵称成功</string>
+    <string name="update_user_avatar">更新用户头像</string>
+    <string name="update_user_avatar_fail">更新用户头像失败</string>
+    <string name="update_user_avatar_success">更新用户头像成功</string>
 
 </resources>

@@ -90,6 +90,6 @@ public class MFGT {
     }
 
     public static void gotoReviseNickActivity(Activity context) {
-        startActivityForResult(context, new Intent(context, ReviseNickActivity.class),I.REQUEST_CODE_NICK);
+        startActivityForResult(context,new Intent(context, ReviseNickActivity.class),I.REQUEST_CODE_NICK);
     }
 }
