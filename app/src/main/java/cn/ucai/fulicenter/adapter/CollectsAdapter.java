@@ -34,7 +34,7 @@ import cn.ucai.fulicenter.views.FooterViewHolder;
  * Created by sunyu on 2016/10/17.
  */
 
-public class CollectsAdapter extends Adapter {
+public class  CollectsAdapter extends Adapter {
     Context mContext;
     ArrayList<CollectBean> mList;
     String footerText;

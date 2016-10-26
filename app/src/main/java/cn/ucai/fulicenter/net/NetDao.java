@@ -136,7 +136,8 @@ public class NetDao {
                 .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
                 .targetClass(CollectBean[].class)
                 .execute(listener);
-    }public static void deleteCollects(Context context,String username,int goodId ,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+    }
+    public static void deleteCollects(Context context,String username,int goodId ,OkHttpUtils.OnCompleteListener<MessageBean> listener){
         OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DELETE_COLLECT)
                 .addParam(I.Collect.USER_NAME,username)
@@ -144,4 +145,21 @@ public class NetDao {
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }
+    public static void isCollected(Context context,String username,int goodId ,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_IS_COLLECT)
+                .addParam(I.Collect.USER_NAME,username)
+                .addParam(I.Collect.GOODS_ID,String.valueOf(goodId))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+    public static void addCollect(Context context,String username,int goodId ,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_ADD_COLLECT)
+                .addParam(I.Collect.USER_NAME,username)
+                .addParam(I.Collect.GOODS_ID,String.valueOf(goodId))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
 }
