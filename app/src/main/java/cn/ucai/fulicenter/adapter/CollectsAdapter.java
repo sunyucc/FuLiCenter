@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.nfc.Tag;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.RecyclerView.ViewHolder;
@@ -16,10 +17,16 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CollectBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.FooterViewHolder;
 
@@ -105,7 +112,7 @@ public class CollectsAdapter extends Adapter {
             CollectBean goods = mList.get(position);
             ImageLoader.downloadImg(mContext, gvh.ivCollectThumb, goods.getGoodsThumb(), true);
             gvh.ivCollectName.setText(goods.getGoodsName());
-            gvh.layoutCollect.setTag(goods.getGoodsId());
+            gvh.layoutCollect.setTag(goods);
         }
     }
 
@@ -122,13 +129,11 @@ public class CollectsAdapter extends Adapter {
         return I.TYPE_ITEM;
     }
 
-    class CollectsViewHolder extends RecyclerView.ViewHolder {
+    class CollectsViewHolder extends ViewHolder {
         @BindView(R.id.ivCollectThumb)
         ImageView ivCollectThumb;
         @BindView(R.id.ivCollectName)
         TextView ivCollectName;
-        @BindView(R.id.imageButton)
-        ImageButton imageButton;
         @BindView(R.id.layout_collect)
         RelativeLayout layoutCollect;
 
@@ -142,7 +147,32 @@ public class CollectsAdapter extends Adapter {
             int goodsId = (int) layoutCollect.getTag();
             MFGT.gotoGoodsDetailsActivity(mContext, goodsId);
         }
+        @OnClick(R.id.btn_delete)
+        public void onClick() {
+            final CollectBean goods = (CollectBean) layoutCollect.getTag();
+            String username = FuLiCenterApplication.getUser().getMuserName();
+            NetDao.deleteCollects(mContext, username, goods.getGoodsId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                @Override
+                public void onSuccess(MessageBean result) {
+                    if (result != null && result.isSuccess()) {
+                        mList.remove(goods);
+                        notifyDataSetChanged();
+                    } else {
+                        CommonUtils.showLongToast(result!=null?result.getMsg():mContext.getResources().getString(R.string.DELETE_COLLECT_FAIL));
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    L.e("error="+error);
+                    CommonUtils.showLongToast(mContext.getResources().getString(R.string.DELETE_COLLECT_FAIL));
+                }
+            });
+        }
+
+
     }
+
 
     private int getFooterString() {
         return isMore ? R.string.load_more : R.string.no_more;
