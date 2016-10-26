@@ -144,8 +144,8 @@ public class  CollectsAdapter extends Adapter {
 
         @OnClick(R.id.layout_collect)
         public void onCollectClock() {
-            int goodsId = (int) layoutCollect.getTag();
-            MFGT.gotoGoodsDetailsActivity(mContext, goodsId);
+            CollectBean goods= (CollectBean) layoutCollect.getTag();
+            MFGT.gotoGoodsDetailsActivity(mContext, goods.getGoodsId());
         }
         @OnClick(R.id.btn_delete)
         public void onClick() {

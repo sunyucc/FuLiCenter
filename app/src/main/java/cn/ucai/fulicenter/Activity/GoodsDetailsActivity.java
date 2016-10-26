@@ -1,7 +1,4 @@
 package cn.ucai.fulicenter.Activity;
-
-import android.content.Context;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -9,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -17,7 +13,6 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.AlbumsBean;
-import cn.ucai.fulicenter.bean.CollectBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.User;
@@ -28,7 +23,6 @@ import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
-
 public class GoodsDetailsActivity extends BaseActivity {
     private static final String TAG = GoodsDetailsActivity.class.getSimpleName();
     GoodsDetailsActivity mContext;
@@ -181,6 +175,7 @@ public class GoodsDetailsActivity extends BaseActivity {
     public void onClick() {
         if (user == null) {
             MFGT.gotoLoginActivity(mContext);
+            return;
         } else {
 
             if (!isCollected) {

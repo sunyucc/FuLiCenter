@@ -152,4 +152,9 @@ public class CollectActivity extends BaseActivity {
         downloadNewGoods(I.ACTION_DOWNLOAD);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
 }

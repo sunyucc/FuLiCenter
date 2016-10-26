@@ -80,10 +80,12 @@ public class PersonalInformationActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         L.e("onActivityResult,requestCode="+requestCode+",resultCode="+resultCode);
-        if(resultCode!=RESULT_OK){
+        if (resultCode != RESULT_OK) {
             return;
+        } else {
+            mOnSetAvatarListener.setAvatar(requestCode,data,userHeadAvatar);
         }
-        mOnSetAvatarListener.setAvatar(requestCode,data,userHeadAvatar);
+
         if(requestCode== I.REQUEST_CODE_NICK){
             CommonUtils.showLongToast(R.string.update_user_nick_success);
         }
