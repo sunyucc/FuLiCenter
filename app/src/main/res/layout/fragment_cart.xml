@@ -51,7 +51,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
         android:background="#ccc"/>
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/lvCart"
         android:layout_below="@id/view_divide_line"
         android:layout_width="match_parent"

@@ -17,14 +17,18 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.AlbumsBean;
+import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.bean.PropertiesBean;
+import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.User;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
@@ -54,6 +58,11 @@ public class GoodsDetailsActivity extends BaseActivity {
     @BindView(R.id.iv_good_collect)
     ImageView mIvGoodCollect;
     User user = null;
+    boolean isChecked;
+    boolean isCarted = false;
+    @BindView(R.id.iv_good_cart)
+    ImageView ivGoodCart;
+    int count = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,6 +136,36 @@ public class GoodsDetailsActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         isCollect();
+        isCart();
+    }
+
+    private void isCart() {
+        L.e(TAG,"------------"+goodsId);
+        if (user != null) {
+            NetDao.findCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                @Override
+                public void onSuccess(CartBean[] result) {
+                    if (result != null) {
+                        for (int i = 0; i < result.length;i++){
+                            if (result[i].getGoodsId() == goodsId) {
+                                isCollected = true;
+
+                                updateGoodsCollectStatus();
+                            }
+                        }
+
+                    } else {
+                        isCollected = false;
+                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    isCollected = false;
+                }
+            });
+        }
+        updateGoodsCartStatus();
     }
 
     @Override
@@ -176,8 +215,42 @@ public class GoodsDetailsActivity extends BaseActivity {
         }
     }
 
+    private void updateGoodsCartStatus() {
+        if (isCarted) {
+            ivGoodCart.setImageResource(R.mipmap.bg_cart_selected);
+        } else {
+            ivGoodCart.setImageResource(R.mipmap.menu_item_cart_selected);
+        }
+    }
+
+    @OnClick(R.id.iv_good_cart)
+    public void onCart() {
+        if (user == null) {
+            MFGT.gotoLoginActivity(mContext);
+        } else {
+            NetDao.addCart(mContext, goodsId, user.getMuserName(), count, isChecked, new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                @Override
+                public void onSuccess(CartBean[] result) {
+//                    if (result != null) {
+//                        isCarted = true;
+//                        CommonUtils.showShortToast(R.string.ADD_COLLECT_SUCCESS);
+//                    } else {
+//                        isCarted = false;
+//                        CommonUtils.showShortToast(R.string.ADD_COLLECT_FAIL);
+//                    }
+                }
+
+                @Override
+                public void onError(String error) {
+                    isCarted = false;
+                    CommonUtils.showShortToast(R.string.ADD_COLLECT_FAIL);
+                }
+            });
+        }
+    }
+
     @OnClick(R.id.iv_good_collect)
-    public void onClick() {
+    public void onCollect() {
         if (user == null) {
             MFGT.gotoLoginActivity(mContext);
             return;
@@ -260,5 +333,7 @@ public class GoodsDetailsActivity extends BaseActivity {
     public void onShareClick() {
         showShare();
     }
+
+
 }
 
