@@ -22,7 +22,7 @@ import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
-import cn.ucai.fulicenter.utils.OkHttpUtils;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 public class BoutiqueChildActivity extends BaseActivity {

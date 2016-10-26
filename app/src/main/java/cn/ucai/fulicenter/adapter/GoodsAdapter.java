@@ -121,8 +121,6 @@ public class GoodsAdapter extends Adapter {
             return I.TYPE_ITEM;
     }
 
-
-
      class GoodsViewHolder extends ViewHolder {
         @BindView(R.id.ivGoodsThumb)
         ImageView ivGoodsThumb;

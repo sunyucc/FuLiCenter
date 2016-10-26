@@ -22,7 +22,7 @@ import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
-import cn.ucai.fulicenter.utils.OkHttpUtils;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.DisplayUtils;
 

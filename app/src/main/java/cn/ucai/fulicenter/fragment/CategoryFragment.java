@@ -20,7 +20,7 @@ import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
-import cn.ucai.fulicenter.utils.OkHttpUtils;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 
 /**
  */

@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.net;
 
 import android.content.Context;
+import android.support.annotation.StringDef;
 
 import java.io.File;
 
@@ -8,11 +9,13 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
+import cn.ucai.fulicenter.bean.CollectBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.utils.MD5;
-import cn.ucai.fulicenter.utils.OkHttpUtils;
+
 public class NetDao {
     public static void downloadNewGoods(Context context, int pageId, OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener){
         OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(context);
@@ -109,6 +112,29 @@ public class NetDao {
                 .addFile2(file)
                 .targetClass(String.class)
                 .post()
+                .execute(listener);
+    }
+    public static void syncUser(Context context, String username,OkHttpUtils.OnCompleteListener<String> listener){
+        OkHttpUtils<String> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_USER)
+                .addParam(I.User.USER_NAME,username)
+                .targetClass(String.class)
+                .execute(listener);
+    }
+    public static void collect(Context context, String username,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECT_COUNT)
+                .addParam(I.Collect.USER_NAME,username)
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+    public static void downloadCollects(Context context, String username,int pageId,OkHttpUtils.OnCompleteListener<CollectBean[]> listener){
+        OkHttpUtils<CollectBean[]> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_FIND_COLLECTS)
+                .addParam(I.Collect.USER_NAME,username)
+                .addParam(I.PAGE_ID,String.valueOf(pageId))
+                .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(CollectBean[].class)
                 .execute(listener);
     }
 }
