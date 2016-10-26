@@ -106,7 +106,8 @@ public class CartAdapter extends Adapter {
             CartBean goods = mList.get(position);
             ImageLoader.downloadImg(mContext, ch.ivGoodsThumb,goods.getGoods().getGoodsThumb(),true);
             ch.tvGoodsName.setText(goods.getGoods().getGoodsName());
-            ch.tvCartCount.setText("("+goods.getGoods().getCurrencyPrice()+")");
+            ch.tvCartCount.setText("("+goods.getCount()+")");
+            ch.tvGoodsPrice.setText(goods.getGoods().getCurrencyPrice());
             ch.mRelCart.setTag(goods.getGoodsId());
 
 

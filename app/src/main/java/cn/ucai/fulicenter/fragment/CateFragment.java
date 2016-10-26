@@ -149,4 +149,10 @@ public class CateFragment extends BaseFragment {
         mRv.setAdapter(mAdapter);
         mRv.addItemDecoration(new SpaceItemDecoration(12));
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
 }

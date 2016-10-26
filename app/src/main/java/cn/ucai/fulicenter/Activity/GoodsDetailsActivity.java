@@ -231,9 +231,9 @@ public class GoodsDetailsActivity extends BaseActivity {
             MFGT.gotoLoginActivity(mContext);
         } else {
             if (!isCarted) {
-                NetDao.addCart(mContext, goodsId, user.getMuserName(), count, isChecked, new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                NetDao.addCart(mContext, goodsId, user.getMuserName(), count, isChecked, new OkHttpUtils.OnCompleteListener<MessageBean>() {
                     @Override
-                    public void onSuccess(CartBean[] result) {
+                    public void onSuccess(MessageBean result) {
                         isCart();
 
                     }
@@ -247,9 +247,9 @@ public class GoodsDetailsActivity extends BaseActivity {
                 for (int i = 0; i < mResult.length; i++) {
                     if (mResult[i].getGoodsId() == goodsId) {
 
-                    NetDao.deleteCart(mContext, mResult[i].getId(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                    NetDao.deleteCart(mContext, mResult[i].getId(), new OkHttpUtils.OnCompleteListener<MessageBean>() {
                         @Override
-                        public void onSuccess(CartBean[] result) {
+                        public void onSuccess(MessageBean result) {
                             isCart();
                         }
 

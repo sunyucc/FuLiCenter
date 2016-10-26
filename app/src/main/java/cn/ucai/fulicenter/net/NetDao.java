@@ -165,14 +165,14 @@ public class NetDao {
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }
-    public static void addCart(Context context,int goodId,String username,int id,boolean isChecked,OkHttpUtils.OnCompleteListener<CartBean[]> listener){
-        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
+    public static void addCart(Context context,int goodId,String username,int id,boolean isChecked,OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_ADD_CART)
                 .addParam(I.Cart.GOODS_ID, String.valueOf(goodId))
                 .addParam(I.Cart.USER_NAME,username)
                 .addParam(I.Cart.COUNT,String.valueOf(id))
                 .addParam(I.Cart.IS_CHECKED,String.valueOf(isChecked))
-                .targetClass(CartBean[].class)
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
     public static void findCart(Context context,String username,OkHttpUtils.OnCompleteListener<CartBean[]> listener){
@@ -182,11 +182,11 @@ public class NetDao {
                 .targetClass(CartBean[].class)
                 .execute(listener);
     }
-    public static void deleteCart(Context context,int id , OkHttpUtils.OnCompleteListener<CartBean[]> listener){
-        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(context);
+    public static void deleteCart(Context context,int id , OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DELETE_CART)
                 .addParam(I.Cart.ID,String.valueOf(id))
-                .targetClass(CartBean[].class)
+                .targetClass(MessageBean.class)
                 .execute(listener);
     }
 
