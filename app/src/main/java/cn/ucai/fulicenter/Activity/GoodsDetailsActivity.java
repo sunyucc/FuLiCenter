@@ -63,6 +63,7 @@ public class GoodsDetailsActivity extends BaseActivity {
     @BindView(R.id.iv_good_cart)
     ImageView ivGoodCart;
     int count = 1;
+    CartBean[] mResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,28 +141,28 @@ public class GoodsDetailsActivity extends BaseActivity {
     }
 
     private void isCart() {
-        L.e(TAG,"------------"+goodsId);
+        L.e(TAG, "------------" + goodsId);
         if (user != null) {
             NetDao.findCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
                 @Override
                 public void onSuccess(CartBean[] result) {
                     if (result != null) {
-                        for (int i = 0; i < result.length;i++){
-                            if (result[i].getGoodsId() == goodsId) {
-                                isCollected = true;
+                        mResult = result;
+                        for (int i = 0; i < result.length; i++) {
+                            if (mResult[i].getGoodsId() == goodsId) {
 
-                                updateGoodsCollectStatus();
+                                isCarted = true;
                             }
                         }
-
                     } else {
-                        isCollected = false;
+                        isCarted = false;
                     }
+                    updateGoodsCartStatus();
                 }
 
                 @Override
                 public void onError(String error) {
-                    isCollected = false;
+                    isCarted = false;
                 }
             });
         }
@@ -170,6 +171,7 @@ public class GoodsDetailsActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mResult = new CartBean[100];
     }
 
     @OnClick(R.id.backClickArea)
@@ -216,7 +218,7 @@ public class GoodsDetailsActivity extends BaseActivity {
     }
 
     private void updateGoodsCartStatus() {
-        if (isCarted) {
+        if (!isCarted) {
             ivGoodCart.setImageResource(R.mipmap.bg_cart_selected);
         } else {
             ivGoodCart.setImageResource(R.mipmap.menu_item_cart_selected);
@@ -228,25 +230,39 @@ public class GoodsDetailsActivity extends BaseActivity {
         if (user == null) {
             MFGT.gotoLoginActivity(mContext);
         } else {
-            NetDao.addCart(mContext, goodsId, user.getMuserName(), count, isChecked, new OkHttpUtils.OnCompleteListener<CartBean[]>() {
-                @Override
-                public void onSuccess(CartBean[] result) {
-//                    if (result != null) {
-//                        isCarted = true;
-//                        CommonUtils.showShortToast(R.string.ADD_COLLECT_SUCCESS);
-//                    } else {
-//                        isCarted = false;
-//                        CommonUtils.showShortToast(R.string.ADD_COLLECT_FAIL);
-//                    }
-                }
+            if (!isCarted) {
+                NetDao.addCart(mContext, goodsId, user.getMuserName(), count, isChecked, new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                    @Override
+                    public void onSuccess(CartBean[] result) {
+                        isCart();
 
-                @Override
-                public void onError(String error) {
-                    isCarted = false;
-                    CommonUtils.showShortToast(R.string.ADD_COLLECT_FAIL);
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        isCart();
+                    }
+                });
+            } else {
+                for (int i = 0; i < mResult.length; i++) {
+                    if (mResult[i].getGoodsId() == goodsId) {
+
+                    NetDao.deleteCart(mContext, mResult[i].getId(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                        @Override
+                        public void onSuccess(CartBean[] result) {
+                            isCart();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            isCart();
+                        }
+                    });
+                    }
                 }
-            });
+            }
         }
+
     }
 
     @OnClick(R.id.iv_good_collect)
