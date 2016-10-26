@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_rel_cart"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fragment_bg" >
@@ -51,17 +52,27 @@
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"
         android:background="#ccc"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lvCart"
-        android:layout_below="@id/view_divide_line"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:divider="@color/fragment_bg"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:dividerHeight="15dp"
-        android:layout_marginTop="5dp"
-        android:cacheColorHint="@color/list_background" />
+        android:background="@color/list_background"
+        android:layout_below="@+id/layout_cart_title">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <include layout="@layout/layout_refresh_title"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
     <TextView
         android:id="@+id/tv_nothing"
         android:layout_below="@id/view_divide_line"
@@ -69,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|center_horizontal"
-        android:text="购物车空空如也"
+        android:text=""
         android:textSize="18sp"
         android:textColor="@color/orange" />
 

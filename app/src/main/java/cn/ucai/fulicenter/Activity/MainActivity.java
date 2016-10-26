@@ -15,6 +15,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.fragment.CateFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.fragment.PersonalCenterFragment;
@@ -43,7 +44,7 @@ public class MainActivity extends BaseActivity {
     BoutiqueFragment mBoutiqueFragment;
     CategoryFragment mCategoryFragment;
     PersonalCenterFragment mPersonalCenterFragment;
-    Fragment mFragment;
+     CateFragment mFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +62,7 @@ public class MainActivity extends BaseActivity {
         mNewGoodsFragment = new NewGoodsFragment();
         mCategoryFragment = new CategoryFragment();
         mPersonalCenterFragment = new PersonalCenterFragment();
-        mFragment = new Fragment();
+        mFragment = new CateFragment();
         mFragments[0] = mNewGoodsFragment;
         mFragments[1] = mBoutiqueFragment;
         mFragments[2] = mCategoryFragment;
