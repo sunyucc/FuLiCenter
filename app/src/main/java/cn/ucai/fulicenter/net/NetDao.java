@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.net;
 
 import android.content.Context;
+import android.support.annotation.BoolRes;
 import android.support.annotation.IdRes;
 import android.support.annotation.StringDef;
 
@@ -186,6 +187,15 @@ public class NetDao {
         OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
         utils.setRequestUrl(I.REQUEST_DELETE_CART)
                 .addParam(I.Cart.ID,String.valueOf(id))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+    public static void updateCartCount(Context context,int id ,int count,boolean isChecked, OkHttpUtils.OnCompleteListener<MessageBean> listener){
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(context);
+        utils.setRequestUrl(I.REQUEST_UPDATE_CART)
+                .addParam(I.Cart.ID,String.valueOf(id))
+                .addParam(I.Cart.COUNT,String.valueOf(count))
+                .addParam(I.Cart.IS_CHECKED,String.valueOf(isChecked))
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }

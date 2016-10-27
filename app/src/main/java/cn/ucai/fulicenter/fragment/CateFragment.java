@@ -3,7 +3,6 @@ package cn.ucai.fulicenter.fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +40,11 @@ public class CateFragment extends BaseFragment {
     RecyclerView mRv;
     @BindView(R.id.srl)
     SwipeRefreshLayout srl;
+    @BindView(R.id.tvSumPrice)
+    TextView tvSumPrice;
+    @BindView(R.id.tvSavePrice)
+    TextView tvSavePrice;
+    CartBean bean ;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,11 +96,18 @@ public class CateFragment extends BaseFragment {
                     if (list.size() < I.PAGE_SIZE_DEFAULT) {
                         mAdapter.setMore(false);
                     }
+                    L.e("————————————————————————"+mList.toString());
+                    int sum =0;
+                    for (int i=0;i<list.size();i++) {
+                        bean = list.get(i);
+                        sum += Integer.parseInt(bean.getGoods().getCurrencyPrice().substring(1,bean.getGoods().getCurrencyPrice().length()));
+                        tvSumPrice.setText("合计：￥"+sum);
+                    }
+                    L.e("-----------------------"+sum);
                 } else {
                     mAdapter.setMore(false);
                 }
             }
-
             @Override
             public void onError(String error) {
                 srl.setRefreshing(false);
@@ -135,6 +146,7 @@ public class CateFragment extends BaseFragment {
     @Override
     protected void initData() {
         downloadNewGoods(I.ACTION_DOWNLOAD);
+
     }
 
     @Override
@@ -148,6 +160,7 @@ public class CateFragment extends BaseFragment {
         mRv.setHasFixedSize(true);
         mRv.setAdapter(mAdapter);
         mRv.addItemDecoration(new SpaceItemDecoration(12));
+        bean = new CartBean();
     }
 
     @Override
