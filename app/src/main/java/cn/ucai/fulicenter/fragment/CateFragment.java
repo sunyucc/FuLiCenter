@@ -100,7 +100,7 @@ public class CateFragment extends BaseFragment {
                     int sum =0;
                     for (int i=0;i<list.size();i++) {
                         bean = list.get(i);
-                        sum += Integer.parseInt(bean.getGoods().getCurrencyPrice().substring(1,bean.getGoods().getCurrencyPrice().length()));
+                        sum += Integer.parseInt(bean.getGoods().getCurrencyPrice().substring(1,bean.getGoods().getCurrencyPrice().length()))*bean.getCount();
                         tvSumPrice.setText("合计：￥"+sum);
                     }
                     L.e("-----------------------"+sum);
@@ -167,5 +167,7 @@ public class CateFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         initData();
+        mRv.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
     }
 }

@@ -50,19 +50,41 @@
     <TextView
         android:id="@+id/tvCartCount"
         android:layout_below="@+id/tvGoodsName"
+        android:layout_toRightOf="@+id/aaaaa"
+        android:layout_alignTop="@+id/ivAddCart"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="3"
+        android:textColor="#f09"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/aaaaa"
+        android:layout_below="@+id/tvGoodsName"
         android:layout_toRightOf="@+id/ivAddCart"
         android:layout_alignTop="@+id/ivAddCart"
         android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="(3)"
+        android:text="("
+        android:textColor="#f09"
+        android:textSize="18sp" />
+    <TextView
+        android:id="@+id/bbbb"
+        android:layout_below="@+id/tvGoodsName"
+        android:layout_toRightOf="@+id/tvCartCount"
+        android:layout_alignTop="@+id/ivAddCart"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=")"
         android:textColor="#f09"
         android:textSize="18sp" />
 
     <ImageView
-        android:id="@+id/ivReduceCart"
+        android:id="@+id/ivDelCart"
         android:layout_below="@+id/tvGoodsName"
-        android:layout_toRightOf="@+id/tvCartCount"
+        android:layout_toRightOf="@+id/bbbb"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginBottom="10dp"

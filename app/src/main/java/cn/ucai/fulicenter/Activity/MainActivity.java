@@ -106,11 +106,15 @@ public class MainActivity extends BaseActivity {
                 index = 2;
                 break;
             case R.id.rbCart:
-                index = 3;
+                if (FuLiCenterApplication.getUser() == null) {
+                    MFGT.gotoLoginActivity(this);
+                } else {
+                    index = 3;
+                }
                 break;
             case R.id.rbContact:
                 if (FuLiCenterApplication.getUser() == null) {
-                    MFGT.gotoLoginActivity(this);
+                    MFGT.gotoLogin(this);
                 } else {
                     index = 4;
                 }
@@ -168,6 +172,9 @@ public class MainActivity extends BaseActivity {
         L.e(TAG, "onActivityResult,requestCode=" + requestCode);
         if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser() != null) {
             index = 4;
+        }
+        if (requestCode == I.REQUEST_CODE_CART && FuLiCenterApplication.getUser() != null) {
+            index =3;
         }
     }
 }

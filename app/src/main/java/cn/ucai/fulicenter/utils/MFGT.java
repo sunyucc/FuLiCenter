@@ -65,7 +65,9 @@ public class MFGT {
         startActivity(context,intent);
     }
     public static void gotoLoginActivity(Activity context){
-        startActivity(context,LoginActivity.class);
+        Intent intent = new Intent();
+        intent.setClass(context,LoginActivity.class);
+        startActivityForResult(context,intent,I.REQUEST_CODE_CART);
     }
     public static void gotoRegisterActivity(Activity context){
         Intent intent = new Intent();
@@ -73,7 +75,6 @@ public class MFGT {
         startActivityForResult(context, intent, I.REQUEST_CODE_REGISTER);
 
     }
-
     private static void startActivityForResult(Activity context, Intent intent, int requestCode) {
         context.startActivityForResult(intent,requestCode);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);

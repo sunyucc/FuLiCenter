@@ -41,5 +41,6 @@
     <string name="DELETE_COLLECT_SUCCESS">删除商品收藏成功</string>
     <string name="ADD_COLLECT_SUCCESS">添加商品成功</string>
     <string name="ADD_COLLECT_FAIL">添加商品失败</string>
+    <string name="DELETE_CART_SUCCESS">移除购物车成功</string>
 
 </resources>
