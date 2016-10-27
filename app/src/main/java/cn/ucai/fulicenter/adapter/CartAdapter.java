@@ -2,11 +2,13 @@ package cn.ucai.fulicenter.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -40,7 +42,6 @@ public class CartAdapter extends Adapter {
     ArrayList<CartBean> mList;
     String footerText;
     int count;
-    CateFragment mFragment;
     boolean isChecked = false;
 
     public int getSoryBy() {
@@ -98,10 +99,7 @@ public class CartAdapter extends Adapter {
     }
 
     public void initData(ArrayList<CartBean> list) {
-        if (mList != null) {
-            mList.clear();
-        }
-        mList.addAll(list);
+        this.mList = list;
         notifyDataSetChanged();
     }
 
@@ -112,12 +110,20 @@ public class CartAdapter extends Adapter {
             footerViewHolder.tvFooter.setText(getFooterString());
         } else {
             CartViewHolder ch = (CartViewHolder) holder;
-            CartBean goods = mList.get(position);
+            final CartBean goods = mList.get(position);
             ImageLoader.downloadImg(mContext, ch.ivGoodsThumb, goods.getGoods().getGoodsThumb(), true);
             ch.tvGoodsName.setText(goods.getGoods().getGoodsName());
             ch.tvCartCount.setText(goods.getCount() + "");
             ch.tvGoodsPrice.setText(goods.getGoods().getCurrencyPrice());
             ch.mRelCart.setTag(goods.getId());
+            ch.chkSelect.setChecked(false);
+            ch.chkSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    goods.setChecked(isChecked);
+                    mContext.sendBroadcast(new Intent(I.BOEADCAST_UPDATA_CART));
+                }
+            });
         }
     }
 
@@ -162,6 +168,7 @@ public class CartAdapter extends Adapter {
             super(view);
             ButterKnife.bind(this, view);
         }
+
         @OnClick(R.id.ivAddCart)
         public void onAddCartCount() {
             int goodId = (int) mRelCart.getTag();
@@ -182,7 +189,9 @@ public class CartAdapter extends Adapter {
 
                 }
             });
+            mContext.sendBroadcast(new Intent(I.BOEADCAST_UPDATA_CART));
         }
+
         @OnClick(R.id.ivDelCart)
         public void onDelCartCount() {
             int goodId = (int) mRelCart.getTag();
@@ -201,6 +210,7 @@ public class CartAdapter extends Adapter {
 
                     }
                 });
+                mContext.sendBroadcast(new Intent(I.BOEADCAST_UPDATA_CART));
                 return;
             }
             NetDao.updateCartCount(mContext, goodId, count, isChecked, new OkHttpUtils.OnCompleteListener<MessageBean>() {
@@ -209,15 +219,15 @@ public class CartAdapter extends Adapter {
                     if (result != null) {
                         tvCartCount.setText(count + "");
                     }
-                    notifyDataSetChanged();
                 }
 
 
                 @Override
                 public void onError(String error) {
-
+                    CommonUtils.showShortToast(error);
                 }
             });
+            mContext.sendBroadcast(new Intent(I.BOEADCAST_UPDATA_CART));
         }
     }
 }

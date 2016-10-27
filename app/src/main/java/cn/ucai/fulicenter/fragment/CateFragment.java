@@ -1,6 +1,9 @@
 package cn.ucai.fulicenter.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -44,7 +47,8 @@ public class CateFragment extends BaseFragment {
     TextView tvSumPrice;
     @BindView(R.id.tvSavePrice)
     TextView tvSavePrice;
-    CartBean bean ;
+    CartBean bean;
+    updateCartReceiver mReceiver;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +66,9 @@ public class CateFragment extends BaseFragment {
     protected void setListener() {
         setPullUpListener();
         setPullDownListener();
+        IntentFilter filter = new IntentFilter(I.BOEADCAST_UPDATA_CART);
+        mReceiver = new updateCartReceiver();
+        mContext.registerReceiver(mReceiver, filter);
     }
 
     private void setPullDownListener() {
@@ -78,45 +85,42 @@ public class CateFragment extends BaseFragment {
 
     private void downloadNewGoods(final int action) {
         User user = FuLiCenterApplication.getUser();
-        NetDao.findCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
-            @Override
-            public void onSuccess(CartBean[] result) {
-                srl.setRefreshing(false);
-                mTv.setVisibility(View.GONE);
-                mAdapter.setMore(true);
-                L.e("result=" + result);
-                if (result != null && result.length > 0) {
-                    ArrayList<CartBean> list = ConvertUtils.array2List(result);
-                    if (action != I.ACTION_PULL_UP) {
-                        mAdapter.initData(list);
-                    } else {
-                        mAdapter.addData(list);
-                    }
+        if (user != null) {
+            NetDao.findCart(mContext, user.getMuserName(), new OkHttpUtils.OnCompleteListener<CartBean[]>() {
+                @Override
+                public void onSuccess(CartBean[] result) {
+                    srl.setRefreshing(false);
+                    mTv.setVisibility(View.GONE);
+                    mAdapter.setMore(true);
+                    L.e("result=" + result);
+                    if (result != null && result.length > 0) {
+                        ArrayList<CartBean> list = ConvertUtils.array2List(result);
+                        if (action != I.ACTION_PULL_UP) {
+                            mList = list;
+                            mAdapter.initData(list);
+                        } else {
+                            mAdapter.addData(list);
+                        }
 
-                    if (list.size() < I.PAGE_SIZE_DEFAULT) {
+                        if (list.size() < I.PAGE_SIZE_DEFAULT) {
+                            mAdapter.setMore(false);
+                        }
+                        sumPrice();
+                    } else {
                         mAdapter.setMore(false);
                     }
-                    L.e("————————————————————————"+mList.toString());
-                    int sum =0;
-                    for (int i=0;i<list.size();i++) {
-                        bean = list.get(i);
-                        sum += Integer.parseInt(bean.getGoods().getCurrencyPrice().substring(1,bean.getGoods().getCurrencyPrice().length()))*bean.getCount();
-                        tvSumPrice.setText("合计：￥"+sum);
-                    }
-                    L.e("-----------------------"+sum);
-                } else {
-                    mAdapter.setMore(false);
                 }
-            }
-            @Override
-            public void onError(String error) {
-                srl.setRefreshing(false);
-                mTv.setVisibility(View.GONE);
-                mAdapter.setMore(false);
-                CommonUtils.showShortToast(error);
-                L.e("error:" + error);
-            }
-        });
+
+                @Override
+                public void onError(String error) {
+                    srl.setRefreshing(false);
+                    mTv.setVisibility(View.GONE);
+                    mAdapter.setMore(false);
+                    CommonUtils.showShortToast(error);
+                    L.e("error:" + error);
+                }
+            });
+        }
     }
 
     private void setPullUpListener() {
@@ -169,5 +173,34 @@ public class CateFragment extends BaseFragment {
         initData();
         mRv.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+    }
+
+    class updateCartReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            sumPrice();
+            initData();
+        }
+    }
+
+    public void sumPrice() {
+        int sum = 0;
+        int price = 0;
+        for (int i = 0; i < mList.size(); i++) {
+            bean = mList.get(i);
+            sum += Integer.parseInt(bean.getGoods().getCurrencyPrice().substring(1, bean.getGoods().getCurrencyPrice().length())) * bean.getCount();
+            price += Integer.parseInt(bean.getGoods().getRankPrice().substring(1, bean.getGoods().getRankPrice().length())) * bean.getCount();
+            tvSumPrice.setText("合计：￥" + price);
+            tvSavePrice.setText("节省：￥" + (sum - price));
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mReceiver != null) {
+            mContext.unregisterReceiver(mReceiver);
+        }
     }
 }

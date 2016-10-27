@@ -54,6 +54,7 @@ public interface I {
     int NEW_GOOD=0;
     int CATEGORY_GOOD=1;
     int CAT_ID=0;
+    String BOEADCAST_UPDATA_CART = "发送更新购物车广播";
 
     interface Goods {
         String KEY_RESULT = "result";
