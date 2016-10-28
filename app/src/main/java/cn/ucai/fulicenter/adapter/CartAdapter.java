@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -194,7 +195,7 @@ public class CartAdapter extends Adapter {
 
         @OnClick(R.id.ivDelCart)
         public void onDelCartCount() {
-            int goodId = (int) mRelCart.getTag();
+            final int goodId = (int) mRelCart.getTag();
             String s = (String) tvCartCount.getText();
             count = Integer.parseInt(s);
             count--;
@@ -203,14 +204,14 @@ public class CartAdapter extends Adapter {
                     @Override
                     public void onSuccess(MessageBean result) {
                         CommonUtils.showShortToast("移除购物车商品成功");
+                        mContext.sendBroadcast(new Intent(I.BOEADCAST_UPDATA_CART));
+                        notifyDataSetChanged();
                     }
-
                     @Override
                     public void onError(String error) {
 
                     }
                 });
-                mContext.sendBroadcast(new Intent(I.BOEADCAST_UPDATA_CART));
                 return;
             }
             NetDao.updateCartCount(mContext, goodId, count, isChecked, new OkHttpUtils.OnCompleteListener<MessageBean>() {

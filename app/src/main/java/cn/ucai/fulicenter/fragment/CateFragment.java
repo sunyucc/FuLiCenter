@@ -98,6 +98,8 @@ public class CateFragment extends BaseFragment {
                         if (action != I.ACTION_PULL_UP) {
                             mList = list;
                             mAdapter.initData(list);
+
+                            sumPrice();
                         } else {
                             mAdapter.addData(list);
                         }
@@ -105,7 +107,6 @@ public class CateFragment extends BaseFragment {
                         if (list.size() < I.PAGE_SIZE_DEFAULT) {
                             mAdapter.setMore(false);
                         }
-                        sumPrice();
                     } else {
                         mAdapter.setMore(false);
                     }
