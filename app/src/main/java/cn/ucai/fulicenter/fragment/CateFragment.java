@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -49,6 +50,10 @@ public class CateFragment extends BaseFragment {
     TextView tvSavePrice;
     CartBean bean;
     updateCartReceiver mReceiver;
+    @BindView(R.id.tv_nothing)
+    TextView mTvNothing;
+    @BindView(R.id.layout_rel_cart)
+    RelativeLayout mLayoutCart;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -181,20 +186,39 @@ public class CateFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             sumPrice();
-            initData();
+            setCartLayout(mList != null && mList.size() > 0);
         }
     }
 
-    public void sumPrice() {
-        int sum = 0;
-        int price = 0;
-        for (int i = 0; i < mList.size(); i++) {
-            bean = mList.get(i);
-            sum += Integer.parseInt(bean.getGoods().getCurrencyPrice().substring(1, bean.getGoods().getCurrencyPrice().length())) * bean.getCount();
-            price += Integer.parseInt(bean.getGoods().getRankPrice().substring(1, bean.getGoods().getRankPrice().length())) * bean.getCount();
-            tvSumPrice.setText("合计：￥" + price);
-            tvSavePrice.setText("节省：￥" + (sum - price));
+    private void setCartLayout(boolean hasCart) {
+        mLayoutCart.setVisibility(hasCart ? View.VISIBLE : View.GONE);
+        mTvNothing.setVisibility(hasCart ? View.GONE : View.VISIBLE);
+        mRv.setVisibility(hasCart ? View.VISIBLE : View.GONE);
+        sumPrice();
+    }
+
+    private void sumPrice() {
+        int sumPrice = 0;
+        int rankPrice = 0;
+        if (mList != null && mList.size() > 0) {
+            for (CartBean c : mList) {
+                if (c.isChecked()) {
+                    sumPrice += getPrice(c.getGoods().getCurrencyPrice()) * c.getCount();
+                    rankPrice += getPrice(c.getGoods().getRankPrice()) * c.getCount();
+                }
+            }
+            tvSumPrice.setText("合计:￥" + Double.valueOf(rankPrice));
+            tvSavePrice.setText("节省:￥" + Double.valueOf(sumPrice - rankPrice));
+
+        } else {
+            tvSumPrice.setText("合计:￥0");
+            tvSavePrice.setText("节省:￥0");
         }
+    }
+
+    private int getPrice(String price) {
+        price = price.substring(price.indexOf("￥") + 1);
+        return Integer.valueOf(price);
     }
 
     @Override

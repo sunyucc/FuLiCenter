@@ -66,13 +66,13 @@
         </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <!--<TextView-->
-        <!--android:id="@+id/tv_nothing"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:gravity="center_vertical|center_horizontal"-->
-        <!--android:text=""-->
-        <!--android:textSize="18sp"-->
-        <!--android:textColor="@color/orange" />-->
+    <TextView
+        android:id="@+id/tv_nothing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:text=""
+        android:textSize="18sp"
+        android:textColor="@color/orange" />
 
 </RelativeLayout>

@@ -24,7 +24,7 @@ import cn.ucai.fulicenter.utils.MFGT;
  * Created by sunyu on 2016/10/20.
  */
 
-public class CategoryAdapter extends BaseExpandableListAdapter {
+public class    CategoryAdapter extends BaseExpandableListAdapter {
     Context mContext;
 
     public CategoryAdapter(Context mContext, ArrayList<CategoryGroupBean> groupList, ArrayList<ArrayList<CategoryChildBean>> childList) {
