@@ -56,6 +56,8 @@ public interface I {
     int CAT_ID=0;
     String BOEADCAST_UPDATA_CART = "发送更新购物车广播";
     int CART_CHECKED_DEFAULT = 0;
+    String SUM_CART = "合计金额";
+    String CART_PRICE = "商品价格";
 
     interface Goods {
         String KEY_RESULT = "result";

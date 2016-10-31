@@ -8,6 +8,7 @@ import android.text.style.UpdateAppearance;
 import java.util.ArrayList;
 
 import cn.ucai.fulicenter.Activity.BoutiqueChildActivity;
+import cn.ucai.fulicenter.Activity.BuyActivity;
 import cn.ucai.fulicenter.Activity.CategoryChildActivity;
 import cn.ucai.fulicenter.Activity.CollectActivity;
 import cn.ucai.fulicenter.Activity.GoodsDetailsActivity;
@@ -98,4 +99,9 @@ public class MFGT {
     public static void gotoCollectActivity(MainActivity mContext) {
         startActivity(mContext, CollectActivity.class);
     }
+
+//    public static void gotoBuyActivity(Activity context,double price) {
+//        Intent intent = new Intent(context,BuyActivity.class).putExtra(I.SUM_CART,price);
+//        startActivity(intent);
+//    }
 }

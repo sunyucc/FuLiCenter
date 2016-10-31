@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.ucai.fulicenter.Activity.BuyActivity;
+import cn.ucai.fulicenter.Activity.MainActivity;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
@@ -29,11 +32,12 @@ import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 
 public class CateFragment extends BaseFragment {
-    Context mContext;
+    MainActivity mContext;
     CartAdapter mAdapter;
     ArrayList<CartBean> mList;
     int mPageId = 1;
@@ -60,7 +64,7 @@ public class CateFragment extends BaseFragment {
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, layout);
-        mContext = getContext();
+        mContext = (MainActivity) getActivity();
         mList = new ArrayList<>();
         mAdapter = new CartAdapter(mContext, mList);
         super.onCreateView(inflater, container, savedInstanceState);
@@ -179,6 +183,13 @@ public class CateFragment extends BaseFragment {
         initData();
         mRv.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.btnBuy)
+    public void onClick() {
+        double price = Double.valueOf(String.valueOf(tvSumPrice.getText()).substring(String.valueOf(tvSumPrice.getText()).indexOf("￥") + 1));
+        Intent intent = new Intent(mContext,BuyActivity.class).putExtra(I.SUM_CART,price);
+        startActivity(intent);
     }
 
     class updateCartReceiver extends BroadcastReceiver {
